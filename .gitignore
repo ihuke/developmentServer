@@ -1,0 +1,6 @@
+node_modules
+.jsbeautifyrc
+.jshintignore
+.jshintrc
+jsconfig.json
+vsc-extension-quickstart.md

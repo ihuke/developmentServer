@@ -1,0 +1,47 @@
+{
+  "name": "server",
+  "displayName": "server",
+  "description": "a light weight express server for development,which support livereload,websocket,mock test and auto complie css.",
+  "version": "0.0.1",
+  "publisher": "huke",
+  "engines": {
+    "vscode": "^1.4.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:server.start",
+    "onCommand:server.stop"
+  ],
+  "main": "./extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "server.start",
+        "title": "Server:Start"
+      },
+      {
+        "command": "server.stop",
+        "title": "Server:Stop"
+      }
+    ]
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "dependencies": {
+    "connect-livereload": "^0.5.4",
+    "csserror": "^2.0.2",
+    "express": "^4.14.0",
+    "gaze": "^1.1.1",
+    "less": "^2.7.1",
+    "open": "0.0.5",
+    "socket.io": "^1.4.8",
+    "ws": "^1.1.1",
+    "xml2js": "^0.4.17"
+  },
+  "devDependencies": {
+    "vscode": "^0.11.0"
+  }
+}
