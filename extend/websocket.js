@@ -1,3 +1,8 @@
+/**
+ * WebSocket extend
+ * 
+ * @author huk/2016.10.16
+ */
 (function () {
     var cache = [];
     sendMethod = WebSocket.prototype.send;
@@ -6,6 +11,7 @@
             url: this.url,
             request: arguments[0]
         });
+        
         if (this.addEventListener) {
             this.addEventListener('message', function (e) {
                 var item = cache.pop();
@@ -18,5 +24,4 @@
 
         sendMethod.apply(this,arguments);
     }
-
 })();
