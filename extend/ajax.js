@@ -1,3 +1,8 @@
+/**
+ * XMLHttpRequest extend
+ * 
+ * @author huk/2016.10.16
+ */
 (function () {
     var READY_STATE_COMPLTETED = 4,
         RealXHRSend = XMLHttpRequest.prototype.send,
@@ -7,12 +12,10 @@
     function isString(value) {
         return typeof value === 'string';
     }
+
     /**
      * 
      * Open(string method,string url,boolean asynch,String username,string password)
-     */
-    /**
-     * 
      */
     XMLHttpRequest.prototype.open = function () {
         if (arguments.length >= 2 && isString(arguments[0]) && isString(arguments[1])) {
@@ -33,7 +36,7 @@
         if (!item.request && arguments.length) {
             item.request = arguments[0];
         }
-        // fireCallbacks(requestCallbacks,this);
+        
         if (this.addEventListener) {
             var self = this;
             this.addEventListener("readystatechange", function () {
@@ -41,7 +44,6 @@
                     item.response = this.responseText;
                     console.log(item);
                 }
-                // fireResponseCallbacksIfCompleted(self);
             }, false);
         } else {
             var realOnReadyStateChange = this.onreadystatechange;
