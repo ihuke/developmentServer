@@ -1,3 +1,4 @@
+const utils = require('../utils');
 /**
  * record request/response function extention
  * inject js/css/html
@@ -9,32 +10,20 @@
  * @author huk/2016.10.17
  */
 module.exports = exports = function (app, server, config, environment) {
-    var ignore = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
-        /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/,
-        /\.json(\?.*)?$/
-    ];
+    var toolbar = '<div class="developmentServer_toolbar"><div class="developmentServer_toolbar_item js-play"><div class="play icon"></div></div><div class="developmentServer_toolbar_item js-stop remove"><div class="stop icon"></div></div><div class="developmentServer_toolbar_item js-download"><div class="download icon"></div></div></div>',
+        header = '<script src="/developmentServer/ajax.js"></script><script src="/developmentServer/websocket.js"></script>',
+        ignore = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
+            /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/,
+            /\.json(\?.*)?$/
+        ],
+        rules = [{
+            match: /<\/body>(?![\s\S]*<\/body>)/i,
+            fn: prepend
+        }, {
+            match: /<\/html>(?![\s\S]*<\/html>)/i,
+            fn: prepend
+        }];
 
-    var include = [/.*/];
-    var html = _html;
-    var rules = [{
-        match: /<\/body>(?![\s\S]*<\/body>)/i,
-        fn: prepend
-    }, {
-        match: /<\/html>(?![\s\S]*<\/html>)/i,
-        fn: prepend
-    }, {
-        match: /<\!DOCTYPE.+?>/i,
-        fn: append
-    }];
-    var disableCompression = false;
-    //var port = opt.port || 35729;
-
-    function snippet(host) {
-        var src = opt.src || '//' + host + ':' + port + '/livereload.js?snipver=1';
-        return '<script src="' + src + '" async="" defer=""></script>';
-    }
-
-    // helper functions
     var regex = (function () {
         var matches = rules.map(function (item) {
             return item.match.source;
@@ -51,7 +40,7 @@ module.exports = exports = function (app, server, config, environment) {
         return w + s;
     }
 
-    function _html(str) {
+    function isHtmlFormat(str) {
         if (!str) return false;
         return /<[:_-\w\s\!\/\=\"\']+>/i.test(str);
     }
@@ -61,9 +50,9 @@ module.exports = exports = function (app, server, config, environment) {
         return regex.test(body);
     }
 
-    function snip(body) {
+    function isInject(body) {
         if (!body) return false;
-        return (~body.lastIndexOf("/livereload.js"));
+        return (~body.lastIndexOf('/developmentServer/extend.js'));
     }
 
     function snap(body, host) {
@@ -95,40 +84,38 @@ module.exports = exports = function (app, server, config, environment) {
     }
 
     const express = require('express');
-    app.use('/puer', express["static"](path.join(__dirname, "../vendor")));
+    app.use('/developmentServer', express.static(path.join(__dirname, "../extend")));
     return function livereload(req, res, next) {
+        var runPatches = true;
+        var writeHead = res.writeHead;
+        var write = res.write;
+        var end = res.end;
         var host = req.headers.host.split(':')[0];
+
         if (res._injectRecord) {
             return next();
         }
         res._injectRecord = true;
 
-        if (!accept(req) || !check(req.url, include) || check(req.url, ignore)) {
+        if (!accept(req) || check(req.url, ignore)) {
             return next();
         }
-
-        var runPatches = true;
-        var writeHead = res.writeHead;
-        var write = res.write;
-        var end = res.end;
 
         res.push = function (chunk) {
             res.data = (res.data || '') + chunk;
         };
 
-        res.inject = res.write = function (string, encoding) {
+        res.write = function (string, encoding) {
             if (!runPatches) {
                 return write.call(res, string, encoding);
             }
 
             if (string !== undefined) {
                 var body = string instanceof Buffer ? string.toString(encoding) : string;
-                // If this chunk must receive a snip, do so
-                if (exists(body) && !snip(res.data)) {
+                if (exists(body) && !isInject(res.data)) {
                     res.push(snap(body, host));
                     return true;
                 }
-                // If in doubt, simply buffer the data for later inspection (on `end` function)
                 else {
                     res.push(body);
                     return true;
@@ -159,10 +146,10 @@ module.exports = exports = function (app, server, config, environment) {
                 return end.call(res, string, encoding);
             }
 
-            res.inject(string);
+            res.write(string);
             runPatches = false;
 
-            if (html(res.data) && exists(res.data) && !snip(res.data)) {
+            if (isHtmlFormat(res.data) && exists(res.data) && !isInject(res.data)) {
                 res.data = snap(res.data, host);
             }
             if (res.data !== undefined && !res._header) {

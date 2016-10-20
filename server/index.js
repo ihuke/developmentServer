@@ -9,7 +9,9 @@ const express = require('express'),
  * @class Server
  */
 module.exports = class Server {
-    constructor() {}
+    constructor(extensionPath) {
+        utils.setCurrentPath(extensionPath);
+    }
 
     /**
      * initilize
@@ -46,17 +48,17 @@ module.exports = class Server {
             } else {
                 const app = express();
                 this.registePreExtentions(app)
-                    // this.supportLiveReload(app);
+                // this.supportLiveReload(app);
                 app.use(express.static(directory));
                 this.server = app.listen(port, () => {
-                        this.environment.appendStatusBar(port);
-                        this.environment.log(`Development server start on port ${port}\n\nhost path:${directory}`);
-                        this.environment.show();
-                        this.registePostExtentions(app, this.server);
-                        // this.supportWebSocket(this.server);
-                        resolve(`Development server start on port ${port}`);
-                        this.open();
-                    })
+                    this.environment.appendStatusBar(port);
+                    this.environment.log(`Development server start on port ${port}\n\nhost path:${directory}`);
+                    this.environment.show();
+                    this.registePostExtentions(app, this.server);
+                    // this.supportWebSocket(this.server);
+                    resolve(`Development server start on port ${port}`);
+                    this.open();
+                })
                     .on('error', error => {
                         this.environment.log(`Failed to start development server due to ${error.message}`);
                         reject(error);

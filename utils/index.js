@@ -16,14 +16,37 @@ class Utils {
      * @memberOf Utils
      */
     setRootPath(rootPath) {
-            this.rootPath = rootPath;
-        }
-        /**
-         * 
-         * 
-         * @param {any} filePath
-         * @returns {fs.Stats}
-         */
+        this.rootPath = rootPath;
+    }
+
+    /**
+     * set current path
+     * 
+     * @param {any} extensionPath
+     * 
+     * @memberOf Utils
+     */
+    setCurrentPath(extensionPath) {
+        this.extensionPath = extensionPath;
+    }
+
+    /**
+     * get current path
+     * 
+     * @returns
+     * 
+     * @memberOf Utils
+     */
+    getCurrentPath() {
+        return this.extensionPath;
+    }
+
+    /**
+     * 
+     * 
+     * @param {any} filePath
+     * @returns {fs.Stats}
+     */
     isFileExists(filePath) {
         let isExists = true;
         try {
