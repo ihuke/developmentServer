@@ -8,7 +8,7 @@ const vscode = require('vscode'),
 
 function activate(context) {
     let environment;
-    const app = new Server();
+    const app = new Server(context.extensionPath);
 
     context.subscriptions.push(vscode.commands.registerCommand('server.start', () => {
         if (!vscode.workspace.rootPath) {
@@ -57,5 +57,5 @@ function activate(context) {
 exports.activate = activate;
 
 // this method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() { }
 exports.deactivate = deactivate;
