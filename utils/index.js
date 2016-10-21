@@ -124,7 +124,25 @@ class Utils {
             encoding: 'utf-8'
         });
         return JSON.parse(Content);
-    };
+    }
+
+    /**
+     * read txt file
+     * 
+     * @param {any} filePath
+     * 
+     * @memberOf Utils
+     */
+    readFile(filePath) {
+        let content = '';
+        if (this.isFileExists(filePath)) {
+            content = fs.readFileSync(filePath, {
+                encoding: 'utf-8'
+            });
+        }
+
+        return content;
+    }
 
     /**
      * import module

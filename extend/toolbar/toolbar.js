@@ -1,18 +1,18 @@
 /**
  * toolbar for record data
+ * play/stop save http.count websocket.count
  * 
  * @author huk/2016.10.20
  */
 window.developmnetServer = window.developmnetServer || {};
 (function (server) {
-    var playBtn, stopBtn;
+    var playBtn, stopBtn, http, websocket;
     /**
      * begin record
      */
     function play() {
         server.recording = true;
-        taggle(playBtn);
-        taggle(stopBtn);
+        toggle(playBtn, stopBtn);
     }
 
     /**
@@ -20,8 +20,7 @@ window.developmnetServer = window.developmnetServer || {};
      */
     function stop() {
         server.recording = false;
-        taggle(playBtn);
-        taggle(stopBtn);
+        toggle(playBtn, stopBtn);
     }
 
     /**
@@ -32,11 +31,20 @@ window.developmnetServer = window.developmnetServer || {};
             var result = generateContent();
             if (result) {
                 downloadFile(result, function () {
-                    server.http = [];
-                    server.websocket = [];
+                    server.http.length = 0;
+                    server.websocket.length = 0;
+                    update();
                 });
             }
         }
+    }
+
+    /**
+     * update data count
+     */
+    function update() {
+        http && (http.innerHTML = server.http.length.toString());
+        websocket && (websocket.innerHTML = server.websocket.length.toString());
     }
 
     /**
@@ -45,7 +53,7 @@ window.developmnetServer = window.developmnetServer || {};
      * @param {any} server
      * @returns
      */
-    function generateContent(server) {
+    function generateContent() {
         var result = {};
         if (server.http) {
             result.http = server.http;
@@ -89,16 +97,33 @@ window.developmnetServer = window.developmnetServer || {};
         element.addEventListener('click', func, false);
     }
 
-    function taggle(element) {
-        if (element.classList.contains('remove')) {
-            element.classList.remove('remove');
-        } else {
-            element.classList.add('remove');
+    /**
+     * toggle element statue
+     */
+    function toggle() {
+        var element;
+        for (var i = 0, ii = arguments.length; i < ii; i++) {
+            element = arguments[i];
+            if (element.classList.contains('remove')) {
+                element.classList.remove('remove');
+            } else {
+                element.classList.add('remove');
+            }
         }
     }
 
+    /**
+     * triggle when received data.
+     */
+    server.notify = function () {
+        update();
+    };
+
+    http = document.querySelector('.developmentServer_toolbar .js-http');
+    websocket = document.querySelector('.developmentServer_toolbar .js-ws');
     registeEvent(playBtn = document.querySelector('.developmentServer_toolbar .js-play'), play);
     registeEvent(stopBtn = document.querySelector('.developmentServer_toolbar .js-stop'), stop);
     registeEvent(document.querySelector('.developmentServer_toolbar .js-download'), save);
+    update();
 
 })(window.developmnetServer);

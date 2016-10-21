@@ -48,7 +48,7 @@ module.exports = class Server {
             } else {
                 const app = express();
                 this.registePreExtentions(app)
-                // this.supportLiveReload(app);
+                this.registeMiddleware(app);
                 app.use(express.static(directory));
                 this.server = app.listen(port, () => {
                     this.environment.appendStatusBar(port);

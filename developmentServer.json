@@ -1,8 +1,18 @@
 {
     "extentions": {
-        "pre": ["liveReload", "mock"],
-        "post": ["websocket"]
+        "pre": [
+            "liveReload",
+            "mock"
+        ],
+        "post": [
+            "websocket"
+        ]
     },
-    "middlewares": ["cors"],
-    "processors": ["xml2json"]
+    "middlewares": [
+        "cors",
+        "record"
+    ],
+    "processors": [
+        "xml2json"
+    ]
 }

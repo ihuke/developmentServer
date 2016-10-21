@@ -2,7 +2,11 @@
     position: fixed;
     top: 0;
     left: 50%;
-    transform: translate(0, -50%);
+    transform: translate(-50%, 0);
+    padding: 5px;
+    background: #90e6e6;
+    border-radius: 2px;
+    box-shadow: 0 0 5px #aac5c5;
 }
 
 .developmentServer_toolbar .developmentServer_toolbar_item {
@@ -11,19 +15,34 @@
     float: left;
     width: 21px;
     height: 21px;
-    border-radius: 2px;
     background-color: white;
-    padding: 5px;
+    padding: 2px;
     border-radius: 2px;
-    border: solid 2px transparent;
-    margin: 0 5px 5px 0;
+    border: solid 2px rgb(175, 200, 216);
+    margin: 3px;
     transition: border-color 0.4s ease-out;
 }
 
-.developmentServer_toolbar .developmentServer_toolbar_item::hover {
+.developmentServer_toolbar .developmentServer_toolbar_label {
+    position: relative;
+    float: left;
+    margin: 3px;
+}
+
+.developmentServer_toolbar .developmentServer_label {
+    font-size: 13px;
+    color: #666;
+    line-height: 27px;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item:hover {
     border-color: #356;
     cursor: pointer;
     /*border-color: #19d599;*/
+}
+
+.developmentServer_toolbar .active {
+    border: solid 2px rgb(220, 92, 79)
 }
 
 .developmentServer_toolbar .developmentServer_toolbar_item .icon {
@@ -72,9 +91,9 @@
     margin-top: 4px;
     width: 11px;
     height: 11px;
-    border: solid 1px #333333;
+    border: solid 1px red;
     border-radius: 1px;
-    background-color: #333333;
+    background-color: red;
 }
 
 .developmentServer_toolbar .developmentServer_toolbar_item .download.icon {

@@ -2,62 +2,20 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Test</title>
+	<meta charset="utf-8">
+	<title>TestPage</title>
 </head>
 
 <body>
-    <p>It's a test.</p>
-    <button>Test Mock</button>
+	<div>
+		<p>Test Page.</p>
+		<button class="http-mock">HTTP Mock</button>
+	</div>
+	<div>
+		<button class="ws-mock">WebSocket Mock</button>
+	</div>
 </body>
-<script src="extend/ajax.js"></script>
-<script src="extend/websocket.js"></script>
 <script src="jquery-3.1.1.min.js"></script>
-
-<script>
-        function create(uri) {
-            var ws = new WebSocket(uri);
-            ws.onopen = handleOpen;
-            ws.onclose = handleClose;
-            ws.onerror = handleError;
-            ws.onmessage = handleMessage;
-            return ws;
-        }
-         function handleOpen(e) {
-            console.log('[socket]socket opened.');
-            initialized = true;
-            var d = JSON.stringify({aa:1,bb:2});
-            client.send(d);
-            //messageProcess.sendAuthorization();
-        }
-        function handleClose(e) {
-            console.log('[socket]socket closed:code[' + e.code + '], reason[' + e.reason + '], closed[' + e.wasClean + ']');
-        }
-        function handleError(e) {
-            console.log('[socket]socket error.');
-        }
-        function handleMessage(e) {
-            if (e && e.data) {
-                console.log(e.data);
-            }
-        }
-
-        var client = create('ws://localhost:8090');
-
-        (function(){
-            // var button = document.querySelector('button');
-            // button.addEventListener('click',function(){
-                $('button').click(function(){
-                    $.get('/api/get',function(data){
-                        console.log('/api/get result:');
-                        console.log(data);
-                    })
-                    .fail(function() {
-                        alert( "error" );
-                    });
-                });
-        })();
-
-    </script>
+<script src="index.js"></script>
 
 </html>

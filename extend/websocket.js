@@ -5,8 +5,9 @@
  */
 window.developmnetServer = window.developmnetServer || {};
 (function (developmnetServer) {
-    developmnetServer.websocket = developmnetServer.websocket || [];
-    sendMethod = WebSocket.prototype.send;
+    var cache = developmnetServer.websocket = developmnetServer.websocket || [],
+        sendMethod = WebSocket.prototype.send;
+
     WebSocket.prototype.send = function () {
         if (developmnetServer.recording) {
             cache.push({
@@ -17,10 +18,11 @@ window.developmnetServer = window.developmnetServer || {};
 
         if (this.addEventListener) {
             this.addEventListener('message', function (e) {
-                if (developmnetServer.recording) {
-                    var item = cache.pop();
+                if (developmnetServer.recording && cache.length) {
+                    var item = cache[cache.length - 1];
                     if (!item.response && e && e.data) {
                         item.response = e.data;
+                        developmnetServer.notify && developmnetServer.notify();
                     }
                     console.log(item);
                 }

@@ -8,17 +8,20 @@ const utils = require('../utils');
  * @param {any} environment
  */
 module.exports = exports = (app, server, config, environment) => {
-    const {
-        mock: {
-            http
-        }
-    } = config;
-    if (utils.isUndefined(http)) {
-        environment.log('http data mock is undefine.');
+    // const {
+    //     mock: {
+    //         http
+    //     }
+    // } = config;
+
+    if (utils.isUndefined(config.mock) || utils.isUndefined(config.mock.http)) {
+        environment.log('[http] mock is undefine.');
         return;
     }
 
-    const keys = Object.keys(http),
+
+    const http = config.mock.http,
+        keys = Object.keys(http),
         processors = utils.importProcessors(config);
     let {
         onResult

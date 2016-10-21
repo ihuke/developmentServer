@@ -1,4 +1,5 @@
-const utils = require('../utils');
+const utils = require('../utils'),
+    path = require('path');
 /**
  * record request/response function extention
  * inject js/css/html
@@ -9,9 +10,9 @@ const utils = require('../utils');
  * @param {any} environment
  * @author huk/2016.10.17
  */
-module.exports = exports = function (app, server, config, environment) {
-    var toolbar = '<div class="developmentServer_toolbar"><div class="developmentServer_toolbar_item js-play"><div class="play icon"></div></div><div class="developmentServer_toolbar_item js-stop remove"><div class="stop icon"></div></div><div class="developmentServer_toolbar_item js-download"><div class="download icon"></div></div></div>',
-        header = '<script src="/developmentServer/ajax.js"></script><script src="/developmentServer/websocket.js"></script>',
+module.exports = exports = function (app, config, environment) {
+    var buttom = '<div class="developmentServer_toolbar"><div class="developmentServer_toolbar_item js-play"><div class="play icon"></div></div><div class="developmentServer_toolbar_item js-stop remove"><div class="stop icon"></div></div><div class="developmentServer_toolbar_item js-download"><div class="download icon"></div></div><div class="developmentServer_toolbar_label "><label class="js-http developmentServer_label"></label></div><div class="developmentServer_toolbar_label "><label class="js-ws developmentServer_label"></label></div></div><script src="/developmentServer/toolbar/toolbar.js"></script>',
+        header = '<script src="/developmentServer/extend.js"></script><link rel="stylesheet" media="screen" href="/developmentServer/toolbar/toolbar.css">',
         ignore = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
             /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/,
             /\.json(\?.*)?$/
@@ -55,12 +56,27 @@ module.exports = exports = function (app, server, config, environment) {
         return (~body.lastIndexOf('/developmentServer/extend.js'));
     }
 
-    function snap(body, host) {
+    function inject(body, host) {
+        return injectBody(injectHeader(body, host), host);
+    }
+
+    function injectHeader(body, host) {
+        var rule = /<head>/;
+        if (rule.test(body)) {
+            body = body.replace(rule, function (w) {
+                return w + header;
+            });
+        }
+        return body;
+    }
+
+    function injectBody(body, host) {
         var _body = body;
+        let content = utils.readFile(path.join(utils.getCurrentPath(), "extend/toolbar/toolbar.html"))
         rules.some(function (rule) {
             if (rule.match.test(body)) {
                 _body = body.replace(rule.match, function (w) {
-                    return rule.fn(w, snippet(host));
+                    return rule.fn(w, content);
                 });
                 return true;
             }
@@ -84,13 +100,13 @@ module.exports = exports = function (app, server, config, environment) {
     }
 
     const express = require('express');
-    app.use('/developmentServer', express.static(path.join(__dirname, "../extend")));
-    return function livereload(req, res, next) {
-        var runPatches = true;
-        var writeHead = res.writeHead;
-        var write = res.write;
-        var end = res.end;
-        var host = req.headers.host.split(':')[0];
+    app.use('/developmentServer', express.static(path.join(utils.getCurrentPath(), "extend")));
+    return function (req, res, next) {
+        var runPatches = true,
+            writeHead = res.writeHead,
+            write = res.write,
+            end = res.end,
+            host = req.headers.host.split(':')[0];
 
         if (res._injectRecord) {
             return next();
@@ -113,7 +129,7 @@ module.exports = exports = function (app, server, config, environment) {
             if (string !== undefined) {
                 var body = string instanceof Buffer ? string.toString(encoding) : string;
                 if (exists(body) && !isInject(res.data)) {
-                    res.push(snap(body, host));
+                    res.push(inject(body, host));
                     return true;
                 }
                 else {
@@ -150,7 +166,7 @@ module.exports = exports = function (app, server, config, environment) {
             runPatches = false;
 
             if (isHtmlFormat(res.data) && exists(res.data) && !isInject(res.data)) {
-                res.data = snap(res.data, host);
+                res.data = inject(res.data, host);
             }
             if (res.data !== undefined && !res._header) {
                 res.setHeader('content-length', Buffer.byteLength(res.data, encoding));
