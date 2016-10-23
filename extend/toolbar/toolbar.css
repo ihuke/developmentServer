@@ -1,0 +1,130 @@
+.developmentServer_toolbar {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 5px;
+    background: #90e6e6;
+    border-radius: 2px;
+    box-shadow: 0 0 5px #aac5c5;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item {
+    position: relative;
+    overflow: hidden;
+    float: left;
+    width: 21px;
+    height: 21px;
+    background-color: white;
+    padding: 2px;
+    border-radius: 2px;
+    border: solid 2px rgb(175, 200, 216);
+    margin: 3px;
+    transition: border-color 0.4s ease-out;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_label {
+    position: relative;
+    float: left;
+    margin: 3px;
+}
+
+.developmentServer_toolbar .developmentServer_label {
+    font-size: 13px;
+    color: #666;
+    line-height: 27px;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item:hover {
+    border-color: #356;
+    cursor: pointer;
+    /*border-color: #19d599;*/
+}
+
+.developmentServer_toolbar .active {
+    border: solid 2px rgb(220, 92, 79)
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .icon {
+    position: absolute;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .icon:before,
+.developmentServer_toolbar .developmentServer_toolbar_item .icon:after {
+    content: '';
+    position: absolute;
+    display: block;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .play.icon {
+    margin-left: 5px;
+    margin-top: 3px;
+    width: 0;
+    height: 0;
+    border-left: solid 11px #333333;
+    border-top: solid 7px transparent;
+    border-bottom: solid 7px transparent;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .pause.icon {
+    margin-left: 4px;
+    margin-top: 4px;
+    width: 13px;
+    height: 13px;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .pause.icon:before,
+.developmentServer_toolbar .developmentServer_toolbar_item .pause.icon:after {
+    width: 3px;
+    height: 11px;
+    border: solid 1px #333333;
+    border-radius: 1px;
+    background-color: #333333;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .pause.icon:after {
+    right: 0;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .stop.icon {
+    margin-left: 4px;
+    margin-top: 4px;
+    width: 11px;
+    height: 11px;
+    border: solid 1px red;
+    border-radius: 1px;
+    background-color: red;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .download.icon {
+    margin-left: 4px;
+    margin-top: 5px;
+    width: 11px;
+    height: 11px;
+    border: solid 1px #333333;
+    border-radius: 1px;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .download.icon:before {
+    width: 1px;
+    height: 10px;
+    background-color: #333333;
+    border-left: solid 3px white;
+    border-right: solid 3px white;
+    top: -4px;
+    left: 2px;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_item .download.icon:after {
+    width: 4px;
+    height: 4px;
+    border-top: solid 1px #333333;
+    border-right: solid 1px #333333;
+    transform: rotate(135deg);
+    left: 3px;
+    top: 1px;
+}
+
+.developmentServer_toolbar .remove {
+    display: none;
+}

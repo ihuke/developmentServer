@@ -15,18 +15,19 @@ const utils = require('../utils'),
  * @author huk/2016.09.27
  */
 module.exports = exports = function (app, server, config, environment) {
-    console.log('test');
-    const {
-        mock: {
-            websocket
-        }
-    } = config;
-    if (typeof websocket === 'undefined' || !websocket.data) {
-        environment.log('[websocket]mock is null.');
+    // const {
+    //     mock: {
+    //         websocket
+    //     }
+    // } = config;
+    if (utils.isUndefined(config.mock) || utils.isUndefined(config.mock.websocket) ||
+        utils.isUndefined(config.mock.websocket.data)) {
+        environment.log('[websocket]mock is undefine.');
         return;
     }
 
-    const WebSocket = require('ws').Server,
+    const websocket = config.mock.websocket,
+        WebSocket = require('ws').Server,
         wsServer = new WebSocket({
             server: server
         }),
@@ -147,12 +148,12 @@ function messageProcessor(item, onResult, environment, socket) {
 function sendData(socket, data, beforeResult) {
     if (typeof data === 'undefined') {
         data = {
-            error: 'data is undefined.'    
+            error: 'data is undefined.'
         };
     }
-     const result = beforeResult ? beforeResult(data) : data;
-        let temp = JSON.stringify(result);
-        socket.send(temp);
+    const result = beforeResult ? beforeResult(data) : data;
+    let temp = JSON.stringify(result);
+    socket.send(temp);
 }
 
 function getRequestKeys(data, keys) {

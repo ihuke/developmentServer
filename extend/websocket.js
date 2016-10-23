@@ -1,22 +1,34 @@
-(function () {
-    var cache = [];
-    sendMethod = WebSocket.prototype.send;
+/**
+ * WebSocket extend
+ * 
+ * @author huk/2016.10.16
+ */
+window.developmnetServer = window.developmnetServer || {};
+(function (developmnetServer) {
+    var cache = developmnetServer.websocket = developmnetServer.websocket || [],
+        sendMethod = WebSocket.prototype.send;
+
     WebSocket.prototype.send = function () {
-        cache.push({
-            url: this.url,
-            request: arguments[0]
-        });
+        if (developmnetServer.recording) {
+            cache.push({
+                url: this.url,
+                request: arguments[0]
+            });
+        }
+
         if (this.addEventListener) {
             this.addEventListener('message', function (e) {
-                var item = cache.pop();
-                if (!item.response && e && e.data) {
-                    item.response = e.data;
+                if (developmnetServer.recording && cache.length) {
+                    var item = cache[cache.length - 1];
+                    if (!item.response && e && e.data) {
+                        item.response = e.data;
+                        developmnetServer.notify && developmnetServer.notify();
+                    }
+                    console.log(item);
                 }
-                console.log(item);
             }, false);
         }
 
-        sendMethod.apply(this,arguments);
+        sendMethod.apply(this, arguments);
     }
-
-})();
+})(window.developmnetServer);
