@@ -1,21 +1,20 @@
 # README
 
 developmentServer is a productivity tool for frontend to improve product development efficiency.
-it's ,which support livereload,mock data for http and websocket
 
 ## Features
 
-- a lightweight webServer for vs code
+- lightweight webServer for vs code
 
-- livereload when file updated
+- livereload when file(js/css/html/less/sass/scss) updated
 
-- automatically genereate style file for less/sass/scss
+- automatically genereate .css file for less/sass/scss
 
-- Http mock data test
+- mock http data server for test
 
-- websocket mock data test
+- mock websocket data server for test
 
-- record and genereate mock data on real request/response,support http and websocket 
+- record and genereate mock data on real request/response,support http and websocket
 
 ## Author
 
