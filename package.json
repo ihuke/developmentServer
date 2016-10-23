@@ -33,6 +33,7 @@
   "dependencies": {
     "connect-livereload": "^0.5.4",
     "csserror": "^2.0.2",
+    "easy-livereload": "^1.2.0",
     "express": "^4.14.0",
     "gaze": "^1.1.1",
     "less": "^2.7.1",
