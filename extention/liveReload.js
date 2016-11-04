@@ -17,7 +17,10 @@ module.exports = exports = function (app, server, config, environment) {
         app.use(livereload({
             port: 35729,
             app: app,
-            watchDirs: watchDirs
+            watchDirs: watchDirs,
+            checkFunc: function (x) {
+                return /\.(css|js|html|htm)$/.test(x);
+            }
         }));
 
         watchDirs.forEach(item => {

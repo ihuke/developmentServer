@@ -14,6 +14,14 @@ window.developmnetServer = window.developmnetServer || {};
         return typeof value === 'string';
     }
 
+    function getResult(value) {
+        try {
+            return JSON.parse(value);
+        } catch (e) {
+            return {};
+        }
+    }
+
     /**
      * 
      * Open(string method,string url,boolean asynch,String username,string password)
@@ -47,7 +55,7 @@ window.developmnetServer = window.developmnetServer || {};
             var self = this;
             this.addEventListener("readystatechange", function () {
                 if (this.readyState === READY_STATE_COMPLTETED && item) {
-                    item.response = this.responseText;
+                    item.response = getResult(this.response || this.responseText);
                     developmnetServer.notify && developmnetServer.notify();
                     console.log(item);
                 }
@@ -75,6 +83,14 @@ window.developmnetServer = window.developmnetServer || {};
     var cache = developmnetServer.websocket = developmnetServer.websocket || [],
         sendMethod = WebSocket.prototype.send;
 
+    function getResult(value) {
+        try {
+            return JSON.parse(value);
+        } catch (e) {
+            return {};
+        }
+    }
+
     WebSocket.prototype.send = function () {
         if (developmnetServer.recording) {
             cache.push({
@@ -88,7 +104,7 @@ window.developmnetServer = window.developmnetServer || {};
                 if (developmnetServer.recording && cache.length) {
                     var item = cache[cache.length - 1];
                     if (!item.response && e && e.data) {
-                        item.response = e.data;
+                        item.response = getResult(e.data);
                         developmnetServer.notify && developmnetServer.notify();
                     }
                     console.log(item);

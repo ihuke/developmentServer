@@ -45,17 +45,23 @@ function activate(context) {
             });
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand('server.openInBrowser', () => {
-        if (app.server) {
-            app.open();
-        } else {
-            utilis.error('Development server is not running');
-        }
+    context.subscriptions.push(vscode.commands.registerCommand('server.restart', () => {
+        environment = new Environment('DevelopmentServer');
+        app.restart(environment)
+            .then(message => {
+                if (message) {
+                    environment.info(message);
+                }
+            }, error => {
+                if (error && error.message) {
+                    environment.error(error.message);
+                }
+            });
     }));
 }
 
 exports.activate = activate;
 
 // this method is called when your extension is deactivated
-function deactivate() { }
+function deactivate() {}
 exports.deactivate = deactivate;

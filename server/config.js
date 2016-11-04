@@ -73,7 +73,8 @@ module.exports = function () {
         customerConfig = getCustomerConfiguration();
     let config = {
         port: environmentConfig.port || port,
-        directory: rootPath
+        directory: rootPath,
+        watchDirs: Array.isArray(customerConfig.watchDirs) ? customerConfig.watchDirs : (customerConfig.watchDirs ? [customerConfig.watchDirs] : [rootPath])
     };
     Object.assign(config, customerConfig, defaultConfig);
     getMockConfiguration(config);

@@ -119,11 +119,23 @@ window.developmnetServer = window.developmnetServer || {};
         update();
     };
 
-    http = document.querySelector('.developmentServer_toolbar .js-http');
-    websocket = document.querySelector('.developmentServer_toolbar .js-ws');
-    registeEvent(playBtn = document.querySelector('.developmentServer_toolbar .js-play'), play);
-    registeEvent(stopBtn = document.querySelector('.developmentServer_toolbar .js-stop'), stop);
-    registeEvent(document.querySelector('.developmentServer_toolbar .js-download'), save);
-    update();
+    function onReady(callback) {
+        if (
+            document.readyState === "complete" ||
+            (document.readyState !== "loading" && !document.documentElement.doScroll)
+        ) {
+            callback();
+        } else {
+            document.addEventListener("DOMContentLoaded", callback);
+        }
+    }
 
+    onReady(function () {
+        http = document.querySelector('.developmentServer_toolbar .js-http');
+        websocket = document.querySelector('.developmentServer_toolbar .js-ws');
+        registeEvent(playBtn = document.querySelector('.developmentServer_toolbar .js-play'), play);
+        registeEvent(stopBtn = document.querySelector('.developmentServer_toolbar .js-stop'), stop);
+        registeEvent(document.querySelector('.developmentServer_toolbar .js-download'), save);
+        update();
+    });
 })(window.developmnetServer);

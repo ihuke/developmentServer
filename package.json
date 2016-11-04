@@ -12,20 +12,21 @@
   ],
   "activationEvents": [
     "onCommand:server.start",
-    "onCommand:server.stop"
+    "onCommand:server.stop",
+    "onCommand:server.restart"
   ],
   "main": "./extension",
   "contributes": {
-    "commands": [
-      {
-        "command": "server.start",
-        "title": "Server:Start"
-      },
-      {
-        "command": "server.stop",
-        "title": "Server:Stop"
-      }
-    ]
+    "commands": [{
+      "command": "server.start",
+      "title": "Server: Start"
+    }, {
+      "command": "server.stop",
+      "title": "Server: Stop"
+    }, {
+      "command": "server.restart",
+      "title": "Server: Restart"
+    }]
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install"

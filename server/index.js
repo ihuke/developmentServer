@@ -51,14 +51,14 @@ module.exports = class Server {
                 this.registeMiddleware(app);
                 app.use(express.static(directory));
                 this.server = app.listen(port, () => {
-                    this.environment.appendStatusBar(port);
-                    this.environment.log(`Development server start on port ${port}\n\nhost path:${directory}`);
-                    this.environment.show();
-                    this.registePostExtentions(app, this.server);
-                    // this.supportWebSocket(this.server);
-                    resolve(`Development server start on port ${port}`);
-                    this.open();
-                })
+                        this.environment.appendStatusBar(port);
+                        this.environment.log(`Development server start on port ${port}\n\nhost path:${directory}`);
+                        this.environment.show();
+                        this.registePostExtentions(app, this.server);
+                        // this.supportWebSocket(this.server);
+                        resolve(`Development server start on port ${port}`);
+                        this.open();
+                    })
                     .on('error', error => {
                         this.environment.log(`Failed to start development server due to ${error.message}`);
                         reject(error);
@@ -90,6 +90,16 @@ module.exports = class Server {
                 reject(new Error('Development server is not running!'));
             }
         });
+    }
+
+    restart(environment) {
+        return this.stop()
+            .then(() => {
+                return this.start(environment);
+
+            }, () => {
+                return this.start(environment);
+            });
     }
 
     /**
