@@ -23,7 +23,7 @@ window.developmnetServer = window.developmnetServer || {};
             if (developmnetServer.recording) {
                 cache.push({
                     method: arguments[0],
-                    url: arguments[2]
+                    url: arguments[1]
                 });
             }
         }

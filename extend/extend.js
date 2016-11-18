@@ -31,7 +31,7 @@ window.developmnetServer = window.developmnetServer || {};
             if (developmnetServer.recording) {
                 cache.push({
                     method: arguments[0],
-                    url: arguments[2]
+                    url: arguments[1]
                 });
             }
         }
@@ -47,7 +47,7 @@ window.developmnetServer = window.developmnetServer || {};
         if (developmnetServer.recording && cache.length) {
             item = cache[cache.length - 1];
             if (!item.request && arguments.length) {
-                item.request = arguments[0];
+                item.request = getResult(arguments[0]);
             }
         }
 
@@ -57,7 +57,7 @@ window.developmnetServer = window.developmnetServer || {};
                 if (this.readyState === READY_STATE_COMPLTETED && item) {
                     item.response = getResult(this.response || this.responseText);
                     developmnetServer.notify && developmnetServer.notify();
-                    console.log(item);
+                    //console.log(item);
                 }
             }, false);
         } else {
@@ -95,7 +95,7 @@ window.developmnetServer = window.developmnetServer || {};
         if (developmnetServer.recording) {
             cache.push({
                 url: this.url,
-                request: arguments[0]
+                request: getResult(arguments[0])
             });
         }
 
@@ -107,7 +107,7 @@ window.developmnetServer = window.developmnetServer || {};
                         item.response = getResult(e.data);
                         developmnetServer.notify && developmnetServer.notify();
                     }
-                    console.log(item);
+                    //console.log(item);
                 }
             }, false);
         }

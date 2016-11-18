@@ -2,11 +2,29 @@
     position: fixed;
     top: 0;
     left: 50%;
+    -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     padding: 5px;
     background: #90e6e6;
     border-radius: 2px;
     box-shadow: 0 0 5px #aac5c5;
+    box-sizing: content-box;
+    font-size: 13px;
+}
+
+.developmentServer_toolbar * {
+    font-size: 13px;
+    box-sizing: content-box;
+}
+
+.developmentServer_toolbar *:before,
+.developmentServer_toolbar *:after {
+    box-sizing: content-box;
+}
+
+.developmentServer_toolbar ::-webkit-scrollbar {
+    width: initial;
+    height: initial;
 }
 
 .developmentServer_toolbar .developmentServer_toolbar_item {
@@ -20,6 +38,7 @@
     border-radius: 2px;
     border: solid 2px rgb(175, 200, 216);
     margin: 3px;
+    -webkit-transition: border-color 0.4s ease-out;
     transition: border-color 0.4s ease-out;
 }
 
@@ -29,10 +48,24 @@
     margin: 3px;
 }
 
+.developmentServer_toolbar .developmentServer_toolbar_label:after {
+    content: '';
+    height: 100%;
+    width: 0;
+    display: inline-block;
+    font-size: 0;
+    vertical-align: middle;
+}
+
 .developmentServer_toolbar .developmentServer_label {
     font-size: 13px;
     color: #666;
-    line-height: 27px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_label label {
+    display: inline;
 }
 
 .developmentServer_toolbar .developmentServer_toolbar_item:hover {
@@ -120,6 +153,7 @@
     height: 4px;
     border-top: solid 1px #333333;
     border-right: solid 1px #333333;
+    -webkit-transform: rotate(135deg);
     transform: rotate(135deg);
     left: 3px;
     top: 1px;
