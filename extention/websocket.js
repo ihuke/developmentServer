@@ -15,14 +15,10 @@ const utils = require('../utils'),
  * @author huk/2016.09.27
  */
 module.exports = exports = function (app, server, config, environment) {
-    // const {
-    //     mock: {
-    //         websocket
-    //     }
-    // } = config;
+
     if (utils.isUndefined(config.mock) || utils.isUndefined(config.mock.websocket) ||
         utils.isUndefined(config.mock.websocket.data)) {
-        environment.log('[websocket]mock is undefine.');
+        environment.log('[websocket]mock is undefined.');
         return;
     }
 

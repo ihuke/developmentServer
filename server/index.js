@@ -11,6 +11,7 @@ const express = require('express'),
 module.exports = class Server {
     constructor(extensionPath) {
         utils.setCurrentPath(extensionPath);
+        this.monitor = true;
     }
 
     /**
@@ -100,6 +101,10 @@ module.exports = class Server {
             }, () => {
                 return this.start(environment);
             });
+    }
+
+    switch(){
+
     }
 
     /**

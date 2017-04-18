@@ -1,5 +1,5 @@
 {
-  "name": "webServer",
+  "name": "devServer",
   "displayName": "webServer",
   "description": "a light weight express server for development,which support livereload,websocket,mock test and auto complie css.",
   "version": "0.0.1",
