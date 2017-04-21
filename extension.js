@@ -58,6 +58,10 @@ function activate(context) {
                 }
             });
     }));
+
+     context.subscriptions.push(vscode.commands.registerCommand('server.open', () => {
+        app.open();
+    }));
 }
 
 exports.activate = activate;

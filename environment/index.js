@@ -52,8 +52,8 @@ class Environment {
     }
 
     appendStatusBar(port) {
-        this.statusBar.command = 'server.openInBrowser';
-        this.statusBar.tooltip = `Web server is hosting.\n\nClick here to open in browser`;
+        this.statusBar.command = 'server.open';
+        this.statusBar.tooltip = `Click here to open html in browser`;
         this.statusBar.text = `$(server) Port ${port}`;
         this.statusBar.show();
     }

@@ -17,7 +17,7 @@ module.exports = class Server {
     /**
      * initilize
      * 
-     * @param {Environment environment
+     * @param {Environment} environment
      */
     initilize(environment) {
         this.environment = environment;
@@ -43,7 +43,7 @@ module.exports = class Server {
             } = this.config;
 
             if (this.server) {
-                const message = 'Development server already started';
+                const message = 'devServer already started';
                 this.environment.log(message)
                 reject(new Error(message));
             } else {
@@ -53,15 +53,14 @@ module.exports = class Server {
                 app.use(express.static(directory));
                 this.server = app.listen(port, () => {
                         this.environment.appendStatusBar(port);
-                        this.environment.log(`Development server start on port ${port}\n\nhost path:${directory}`);
+                        this.environment.log(`devServer start on port ${port}\n\nhost path:${directory}`);
                         this.environment.show();
                         this.registePostExtentions(app, this.server);
-                        // this.supportWebSocket(this.server);
-                        resolve(`Development server start on port ${port}`);
+                        resolve(`devServer start on port ${port}`);
                         this.open();
                     })
                     .on('error', error => {
-                        this.environment.log(`Failed to start development server due to ${error.message}`);
+                        this.environment.log(`Failed to start devServer due to ${error.message}`);
                         reject(error);
                         this.server = null;
                     })
@@ -82,13 +81,13 @@ module.exports = class Server {
     stop() {
         return new Promise((resolve, reject) => {
             if (this.server) {
-                this.environment.log(`Development server is stopping`);
+                this.environment.log(`devServer is stopping`);
                 this.server.close(() => {
                     this.dispose();
-                    resolve('Development server stopped');
+                    resolve('devServer stopped');
                 });
             } else {
-                reject(new Error('Development server is not running!'));
+                reject(new Error('devServer is not running!'));
             }
         });
     }

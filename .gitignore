@@ -3,5 +3,7 @@ refrence
 .jsbeautifyrc
 .jshintignore
 .jshintrc
+.vscode
 jsconfig.json
 vsc-extension-quickstart.md
+devServer-0.0.1.vsix

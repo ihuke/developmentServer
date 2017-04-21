@@ -1,11 +1,15 @@
 {
   "name": "devServer",
-  "displayName": "webServer",
+  "displayName": "devServer",
   "description": "a light weight express server for development,which support livereload,websocket,mock test and auto complie css.",
   "version": "0.0.1",
-  "publisher": "huke",
+  "publisher": "ihuke",
   "engines": {
     "vscode": "^1.4.0"
+  },
+  "Repository": {
+    "type": "git",
+    "url": "https://github.com/ihuke/developmentServer.git"
   },
   "categories": [
     "Other"
@@ -13,20 +17,24 @@
   "activationEvents": [
     "onCommand:server.start",
     "onCommand:server.stop",
-    "onCommand:server.restart"
+    "onCommand:server.restart",
+    "onCommand:server.open"
   ],
   "main": "./extension",
   "contributes": {
     "commands": [{
-      "command": "server.start",
-      "title": "Server: Start"
-    }, {
-      "command": "server.stop",
-      "title": "Server: Stop"
-    }, {
-      "command": "server.restart",
-      "title": "Server: Restart"
-    }]
+        "command": "server.start",
+        "title": "devServer: Start"
+      },
+      {
+        "command": "server.stop",
+        "title": "devServer: Stop"
+      },
+      {
+        "command": "server.restart",
+        "title": "devServer: Restart"
+      }
+    ]
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install"
@@ -39,7 +47,6 @@
     "gaze": "^1.1.1",
     "less": "^2.7.1",
     "open": "0.0.5",
-    "socket.io": "^1.4.8",
     "ws": "^1.1.1",
     "xml2js": "^0.4.17"
   },
