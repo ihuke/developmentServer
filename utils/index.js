@@ -173,7 +173,11 @@ class Utils {
             // const extention = require(`../extention/${item}`);
             const extention = this.checkAndimportModule(item.path, `../extention/${item}`);
             if (this.isFunction(extention)) {
-                extention(app, server, config, environment);
+                try{
+                    extention(app, server, config, environment);
+                }catch(error){
+                    console.log(error);
+                }
             }
         });
     }
