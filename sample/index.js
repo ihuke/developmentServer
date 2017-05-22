@@ -39,7 +39,7 @@
         }
     }
 
-    $('.ws-mock').click(function () {
+    document.querySelector('.ws-mock').addEventListener('click', function () {
         if (!client) {
             client = create('ws://localhost:8090');
         } else {
@@ -47,14 +47,23 @@
         }
     });
 
+    document.querySelector('.http-mock')
+        .addEventListener('click', function () {
+            if (!client) {
+                client = create('ws://localhost:8090');
+            } else {
+                sendMessage();
+            }
+        });
 
-    $('.http-mock').click(function () {
-        $.get('/api/get', function (data) {
-                console.log('/api/get result:');
-                console.log(data);
-            })
-            .fail(function () {
-                alert("error");
-            });
-    });
+    document.querySelector('')
+        .addEventListener('click', function () {
+            $.get('/api/get', function (data) {
+                    console.log('/api/get result:');
+                    console.log(data);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+        });
 })($);
