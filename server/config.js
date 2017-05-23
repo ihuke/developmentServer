@@ -13,7 +13,7 @@ const {
  * @returns {{}}
  */
 function getCustomerConfiguration() {
-    const configFile = path.join(rootPath, 'developmentServer.json'),
+    const configFile = path.join(rootPath, 'devServer.json'),
         isExists = utils.isFileExists(configFile);
 
     const config = isExists ? utils.importJson(configFile) : {};

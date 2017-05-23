@@ -170,12 +170,12 @@ class Utils {
      */
     registeExtentions(app, server, config, environment, extentions) {
         extentions.forEach(item => {
-            // const extention = require(`../extention/${item}`);
-            const extention = this.checkAndimportModule(item.path, `../extention/${item}`);
+            const extention = this.checkAndImportModule(item.path, `../extention/${item}`);
             if (this.isFunction(extention)) {
                 try{
                     extention(app, server, config, environment);
                 }catch(error){
+                    console.log('register ${item} failure.')
                     console.log(error);
                 }
             }
@@ -192,8 +192,7 @@ class Utils {
      */
     registeMiddleWares(app, config, environment, middlewares) {
         middlewares.forEach(item => {
-            const middleware = this.checkAndimportModule(item.path, `../middleware/${item}`);
-            // const middleware = require(`../middleware/${item}`);
+            const middleware = this.checkAndImportModule(item.path, `../middleware/${item}`);
             if (this.isFunction(middleware)) {
                 app.use(middleware(app, config, environment));
             }
@@ -217,7 +216,7 @@ class Utils {
 
             if (processors) {
                 processors.forEach(p => {
-                    const processor = this.checkAndimportModule(p.path, `../processor/${p}`);
+                    const processor = this.checkAndImportModule(p.path, `../processor/${p}`);
                     if (processor) {
                         result[processor.type] = processor.onResponse;
                     }
@@ -239,7 +238,7 @@ class Utils {
      * 
      * @memberOf Utils
      */
-    checkAndimportModule(filePath, defaultPath) {
+    checkAndImportModule(filePath, defaultPath) {
         // TODO: 执行路径不同于当前根目录
         let truePath = filePath ? this.generateFilePath(filePath, this.rootPath) : defaultPath;
         return this.importModule(truePath);

@@ -3,7 +3,7 @@
   "displayName": "devServer",
   "description": "a light weight express server for development,which support livereload,websocket,mock test and auto complie css.",
   "version": "0.0.1",
-  "publisher": "ihuke",
+  "publisher": "huke",
   "engines": {
     "vscode": "^1.4.0"
   },

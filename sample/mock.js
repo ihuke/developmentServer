@@ -28,7 +28,6 @@ module.exports = exports = {
         }
     },
     websocket: {
-        // keys
         data: [{
             request: {
                 aa: 1,

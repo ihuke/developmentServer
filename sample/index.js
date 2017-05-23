@@ -47,19 +47,21 @@
         }
     });
 
-    document.querySelector('.http-mock')
-        .addEventListener('click', function () {
-            if (!client) {
-                client = create('ws://localhost:8090');
-            } else {
-                sendMessage();
-            }
-        });
-
-    document.querySelector('')
+    document.querySelector('.http-get-mock')
         .addEventListener('click', function () {
             $.get('/api/get', function (data) {
                     console.log('/api/get result:');
+                    console.log(data);
+                })
+                .fail(function () {
+                    alert("error");
+                });
+        });
+
+    document.querySelector('.http-post-mock')
+        .addEventListener('click', function () {
+            $.post('/api/post', function (data) {
+                    console.log('/api/post result:');
                     console.log(data);
                 })
                 .fail(function () {
