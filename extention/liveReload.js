@@ -11,12 +11,14 @@ module.exports = exports = function(app, server, config, environment) {
   const { watchDirs } = config;
 
   if (Array.isArray(watchDirs)) {
+    /*
     app.use(
       require("connect-livereload")({
         port: 35729
       })
     );
-    /*
+    */
+    
     var livereload = require("easy-livereload");
     app.use(
       livereload({
@@ -28,7 +30,7 @@ module.exports = exports = function(app, server, config, environment) {
         }
       })
     );
-    */
+    
 
     watchDirs.forEach(item => {
       environment.log(`livereload watch:${item}`);
