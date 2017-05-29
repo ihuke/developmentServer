@@ -1,6 +1,6 @@
 const fs = require('fs'),
     path = require('path');
-//environment = require('../environment');
+    
 /**
  * livereload extention
  * 
@@ -19,7 +19,7 @@ module.exports = exports = function (app, server, config, environment) {
     if (Array.isArray(watchDirs)) {
         const wsServer = createWSServer(config.livePort || port, server),
             watch = require('node-watch');
-        
+
         wsServer.on('connection', socket => {
             socket.send(JSON.stringify({
                 'command': 'hello',
@@ -36,18 +36,18 @@ module.exports = exports = function (app, server, config, environment) {
         watchDirs.forEach(function (dir) {
             watch(dir, function (file) {
                 if (app.liveReload || config.liveReload) {
-                    file = path.relative(dir, file);
-                    sendCommand(wsServer, {
-                        command: 'reload',
-                        path: file,
-                        liveCSS: true
-                    });
+                    if (checkFile(file)) {
+                        file = path.relative(dir, file);
+                        sendCommand(wsServer, {
+                            command: 'reload',
+                            path: file,
+                            liveCSS: true
+                        });
+                    }
                 }
             });
-        });
 
-        watchDirs.forEach(item => {
-            console.log(`livereload watch:${item}`);
+            console.log(`livereload watch:${dir}`);
         });
     }
 };
@@ -68,4 +68,8 @@ function sendCommand(wsServer, command) {
             client.send(temp);
         }
     });
+}
+
+function checkFile(x) {
+    return /\.(css|js|html|htm)$/.test(x);
 }

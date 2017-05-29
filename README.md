@@ -7,9 +7,10 @@ developmentServer is a productivity tool for frontend to improve product develop
 - lightweight webServer for vs code  
   ![command](./doc/open.gif)
 
-- livereload when file(js/css/html/less/sass/scss) updated
+- ~~livereload when file(js/css/html/less/sass/scss) updated~~  
+  A third component failure on node.js 6.0++,I will fix it as soon as possible.
 
-- automatically generate .css file for less/sass/scss
+- ~~automatically generate .css file for less/sass/scss~~
 
 - mock server
   * support HTTP Web API
