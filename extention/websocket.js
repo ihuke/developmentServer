@@ -6,7 +6,7 @@ const utils = require('../utils'),
     }
 
 /**
- * websocket extention
+ * websocket mock extention
  * 
  * @param {any} app
  * @param {httpServer} server
@@ -107,7 +107,7 @@ function onMessage(message, socket, mock, processors, environment) {
         }
     }
 
-    if (keyValue) {
+    if (keyValue && data[keyValue]) {
         item = data[keyValue];
         if (utils.isFunction(mock.onResponse)) {
             mock.onResponse(item, mock.onResult, environment, socket);

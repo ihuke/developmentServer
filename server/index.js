@@ -102,7 +102,12 @@ module.exports = class Server {
             });
     }
 
-    switch(){
+    /**
+     * toggle liveReload
+     * 
+     */
+    toggle() {
+        
 
     }
 

@@ -62,6 +62,14 @@ function activate(context) {
      context.subscriptions.push(vscode.commands.registerCommand('server.open', () => {
         app.open();
     }));
+
+    context.subscriptions.push(vscode.commands.registerCommand('server.beginLiveReload',()=>{
+
+    }));
+
+    context.subscriptions.push(vscode.commands.registerCommand('server.stopLiveReload',()=>{
+
+    }));
 }
 
 exports.activate = activate;

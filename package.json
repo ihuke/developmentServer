@@ -18,7 +18,9 @@
     "onCommand:server.start",
     "onCommand:server.stop",
     "onCommand:server.restart",
-    "onCommand:server.open"
+    "onCommand:server.open",
+    "onCommand:server.beginLiveReload",
+    "onCommand:server.stopLiveReload"
   ],
   "main": "./extension",
   "contributes": {
@@ -29,10 +31,6 @@
       {
         "command": "server.stop",
         "title": "devServer: Stop"
-      },
-      {
-        "command": "server.restart",
-        "title": "devServer: Restart"
       }
     ]
   },

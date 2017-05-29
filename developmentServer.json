@@ -1,10 +1,10 @@
 {
     "extentions": {
         "pre": [
-            "liveReload",
             "mock"
         ],
         "post": [
+            "liveReload",
             "websocket"
         ]
     },

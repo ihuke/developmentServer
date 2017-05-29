@@ -175,7 +175,7 @@ class Utils {
                 try{
                     extention(app, server, config, environment);
                 }catch(error){
-                    console.log('register ${item} failure.')
+                    console.log(`register ${item} failure.`)
                     console.log(error);
                 }
             }

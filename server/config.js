@@ -72,6 +72,7 @@ module.exports = function () {
         defaultConfig = getDefaultConfiguration(),
         customerConfig = getCustomerConfiguration();
     let config = {
+        liveReload: true,
         port: environmentConfig.port || port,
         directory: rootPath,
         watchDirs: Array.isArray(customerConfig.watchDirs) ? customerConfig.watchDirs : (customerConfig.watchDirs ? [customerConfig.watchDirs] : [rootPath])

@@ -11,15 +11,19 @@ developmentServer is a productivity tool for frontend to improve product develop
 
 - automatically generate .css file for less/sass/scss
 
-- mock http data server for test
-  > declare "http" section in mock file  
+- mock server
+  * support HTTP Web API
+    > declare "http" section in mock file  
   ![http](./doc/mock_http.jpg)
 
-- mock websocket data server for test
-  > declare "websocket" section in mock file  
-  ![websocket](./doc/mock_websocket.jpg)
+  * support websocket API
+    > declare "websocket" section in mock file  
+    ![websocket](./doc/mock_websocket.jpg)
 
 - record and generate mock data on real request/response,support xmlhttprequest and websocket
+
+## How to customize
+  TODO
 
 ## Sample
 >Use VS Code open the [Sample](https://github.com/ihuke/developmentServer/sample)
