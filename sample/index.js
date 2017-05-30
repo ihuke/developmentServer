@@ -1,5 +1,10 @@
 (function ($) {
-    var client;
+    var client,
+        var factory = {
+            get: get,
+            post: post,
+            socket: socket
+        };
 
     function create(uri) {
         var ws = new WebSocket(uri);
@@ -39,33 +44,51 @@
         }
     }
 
-    document.querySelector('.ws-mock').addEventListener('click', function () {
+    function getChecked() {
+        var items = document.querySelectorAll('input');
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].checked) {
+                return items[i];
+            }
+        }
+    }
+
+    function socket() {
         if (!client) {
             client = create('ws://localhost:8090');
         } else {
             sendMessage();
         }
+    }
+
+    function get() {
+        $.get('/api/get', function (data) {
+                console.log('/api/get result:');
+                console.log(data);
+            })
+            .fail(function () {
+                alert("error");
+            });
+    }
+
+    function post() {
+        $.post('/api/post', function (data) {
+                console.log('/api/post result:');
+                console.log(data);
+            })
+            .fail(function () {
+                alert("error");
+            });
+    }
+
+    document.querySelector('input').checked = "checked";
+    document.querySelector('.run-button').addEventListener('click', function () {
+        var type,
+            item = getChecked();
+
+        if (item) {
+            type = item.dataset['type'];
+            factory[type]();
+        }
     });
-
-    document.querySelector('.http-get-mock')
-        .addEventListener('click', function () {
-            $.get('/api/get', function (data) {
-                    console.log('/api/get result:');
-                    console.log(data);
-                })
-                .fail(function () {
-                    alert("error");
-                });
-        });
-
-    document.querySelector('.http-post-mock')
-        .addEventListener('click', function () {
-            $.post('/api/post', function (data) {
-                    console.log('/api/post result:');
-                    console.log(data);
-                })
-                .fail(function () {
-                    alert("error");
-                });
-        });
 })($);

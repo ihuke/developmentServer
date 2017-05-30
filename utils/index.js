@@ -173,7 +173,11 @@ class Utils {
             const extention = this.checkAndImportModule(item.path, `../extention/${item}`);
             if (this.isFunction(extention)) {
                 try{
-                    extention(app, server, config, environment);
+                   let callback = extention(app, server, config, environment);
+                   if(callback){
+                       app.$extentions = app.$extentions || {};
+                       app.$extentions[item] = callback;
+                   }
                 }catch(error){
                     console.log(`register ${item} failure.`)
                     console.log(error);

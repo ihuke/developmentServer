@@ -8,25 +8,36 @@
 </head>
 
 <body>
-	<head>
-		<p>devServer Demo</p>
-	</head>
+	<header>
+		<h1>
+			<span>devServer</span>
+			<span class="version">v1.0.1</span>
+		</h1>
+		<p>
+			A frontend productivity tool for Visual Studio Code.
+		</p>
+	</header>
+	<nav>
+		<a class="active">Mock</a>
+		<a>Customize</a>
+	</nav>
 	<article>
-		<section>
-			<div>
-				<button class="http-get-mock">HTTP:GET</button>
+		<p>This is a demo for mock server,it's a part of devServer which supports HTTP/WebSocket API.</p>
+		<p>Try it out:</p>
+		<div class="toolbar"> 
+			<a class="title">Mock API</a>
+			<input type="radio" name="api" data-type="get"><span> HTTP Get</span>
+			<input type="radio" name="api" data-type="post"><span>HTTP POST</span> 
+			<input type="radio" name="api" data-type="socket"><span>WebSocket</span>
+			<div class="toolbar-right">
+				<button class="run-button">
+				<span class="runkit-icon fa fa-play" style="font-size:11px;margin-right:5px;" name="play" data-reactid=".0.0.0.0.0.1.0.2.0.0.0.1.2.0.0.0"></span><span data-reactid=".0.0.0.0.0.1.0.2.0.0.0.1.2.0.0.1">run</span></button>
+
 			</div>
-		</section>
-		<section class="message">
-			test
+		</div>
+		<section class="message">			
 		</section>
 	</article>
-	<div>
-		<button class="http-post-mock">HTTP:POST</button>
-	</div>
-	<div>
-		<button class="ws-mock">WebSocket</button>
-	</div>
 </body>
 <script src="jquery-3.1.1.min.js"></script>
 <script src="index.js"></script>

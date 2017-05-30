@@ -1,6 +1,6 @@
 const fs = require('fs'),
     path = require('path');
-    
+
 /**
  * livereload extention
  * 
@@ -15,6 +15,7 @@ module.exports = exports = function (app, server, config, environment) {
         watchDirs
     } = config,
     port = 35729;
+    let isChanged = false;
 
     if (Array.isArray(watchDirs)) {
         const wsServer = createWSServer(config.livePort || port, server),
@@ -36,6 +37,7 @@ module.exports = exports = function (app, server, config, environment) {
         watchDirs.forEach(function (dir) {
             watch(dir, function (file) {
                 if (app.liveReload || config.liveReload) {
+                    isChanged = false;
                     if (checkFile(file)) {
                         file = path.relative(dir, file);
                         sendCommand(wsServer, {
@@ -44,11 +46,24 @@ module.exports = exports = function (app, server, config, environment) {
                             liveCSS: true
                         });
                     }
+                } else {
+                    isChanged = true;
                 }
             });
 
             console.log(`livereload watch:${dir}`);
         });
+
+        return function () {
+            if (isChanged) {
+                isChanged = false;
+                sendCommand(wsServer, {
+                    command: 'reload',
+                    path: file,
+                    liveCSS: true
+                });
+            }
+        };
     }
 };
 
