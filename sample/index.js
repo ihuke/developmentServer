@@ -1,6 +1,6 @@
 (function ($) {
     var client,
-        var factory = {
+        factory = {
             get: get,
             post: post,
             socket: socket
@@ -81,7 +81,7 @@
             });
     }
 
-    document.querySelector('input').checked = "checked";
+    document.querySelector('input').checked = true;
     document.querySelector('.run-button').addEventListener('click', function () {
         var type,
             item = getChecked();
