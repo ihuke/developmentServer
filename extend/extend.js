@@ -3,12 +3,12 @@
  * 
  * @author huk/2016.10.16
  */
-window.developmnetServer = window.developmnetServer || {};
-(function (developmnetServer) {
+window.developmentServer = window.developmentServer || {};
+(function (developmentServer) {
     var READY_STATE_COMPLTETED = 4,
         RealXHRSend = XMLHttpRequest.prototype.send,
         RealXHROpen = XMLHttpRequest.prototype.open,
-        cache = developmnetServer.http = developmnetServer.http || [];
+        cache = developmentServer.http = developmentServer.http || [];
 
     function isString(value) {
         return typeof value === 'string';
@@ -28,7 +28,7 @@ window.developmnetServer = window.developmnetServer || {};
      */
     XMLHttpRequest.prototype.open = function () {
         if (arguments.length >= 2 && isString(arguments[0]) && isString(arguments[1])) {
-            if (developmnetServer.recording) {
+            if (developmentServer.recording) {
                 cache.push({
                     method: arguments[0],
                     url: arguments[1]
@@ -44,7 +44,7 @@ window.developmnetServer = window.developmnetServer || {};
      */
     XMLHttpRequest.prototype.send = function () {
         var item;
-        if (developmnetServer.recording && cache.length) {
+        if (developmentServer.recording && cache.length) {
             item = cache[cache.length - 1];
             if (!item.request && arguments.length) {
                 item.request = getResult(arguments[0]);
@@ -56,7 +56,7 @@ window.developmnetServer = window.developmnetServer || {};
             this.addEventListener("readystatechange", function () {
                 if (this.readyState === READY_STATE_COMPLTETED && item) {
                     item.response = getResult(this.response || this.responseText);
-                    developmnetServer.notify && developmnetServer.notify();
+                    developmentServer.notify && developmentServer.notify();
                     //console.log(item);
                 }
             }, false);
@@ -72,15 +72,15 @@ window.developmnetServer = window.developmnetServer || {};
         RealXHRSend.apply(this, arguments);
     };
 
-})(window.developmnetServer);
+})(window.developmentServer);
 
 /**
  * WebSocket extend
  * 
  * @author huk/2016.10.16
  */
-(function (developmnetServer) {
-    var cache = developmnetServer.websocket = developmnetServer.websocket || [],
+(function (developmentServer) {
+    var cache = developmentServer.websocket = developmentServer.websocket || [],
         sendMethod = WebSocket.prototype.send;
 
     function getResult(value) {
@@ -92,7 +92,7 @@ window.developmnetServer = window.developmnetServer || {};
     }
 
     WebSocket.prototype.send = function () {
-        if (developmnetServer.recording) {
+        if (developmentServer.recording) {
             cache.push({
                 url: this.url,
                 request: getResult(arguments[0])
@@ -101,11 +101,11 @@ window.developmnetServer = window.developmnetServer || {};
 
         if (this.addEventListener) {
             this.addEventListener('message', function (e) {
-                if (developmnetServer.recording && cache.length) {
+                if (developmentServer.recording && cache.length) {
                     var item = cache[cache.length - 1];
                     if (!item.response && e && e.data) {
                         item.response = getResult(e.data);
-                        developmnetServer.notify && developmnetServer.notify();
+                        developmentServer.notify && developmentServer.notify();
                     }
                     //console.log(item);
                 }
@@ -114,4 +114,4 @@ window.developmnetServer = window.developmnetServer || {};
 
         sendMethod.apply(this, arguments);
     }
-})(window.developmnetServer);
+})(window.developmentServer);

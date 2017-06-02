@@ -10,19 +10,20 @@ module.exports = exports = {
             },
             type: 'jsonp',
             response: {
-                a: 1,
-                b: 2
+                data : 'HTTP[get] Result.',
+                status : 0
             }
         },
         '/api/post': {
             method: 'post',
             response: {
-                r: 1
+                data: 'HTTP[post] Result.',
+                status: 0
             },
             onResult: function (result) {
                 return {
-                    statue: 100,
-                    data: result
+                    code: 100,
+                    warp: result
                 };
             }
         }
@@ -30,11 +31,11 @@ module.exports = exports = {
     websocket: {
         data: [{
             request: {
-                aa: 1,
-                bb: 2
+                command: 'ws',
+                data: 'request'
             },
             response: {
-                test: 'ok'
+                result: 'WebSocket Result'
             }
         }]
     }

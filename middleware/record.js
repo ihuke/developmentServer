@@ -11,8 +11,7 @@ const utils = require('../utils'),
  * @author huk/2016.10.17
  */
 module.exports = exports = function (app, config, environment) {
-    var buttom = '<div class="developmentServer_toolbar"><div class="developmentServer_toolbar_item js-play"><div class="play icon"></div></div><div class="developmentServer_toolbar_item js-stop remove"><div class="stop icon"></div></div><div class="developmentServer_toolbar_item js-download"><div class="download icon"></div></div><div class="developmentServer_toolbar_label "><label class="js-http developmentServer_label"></label></div><div class="developmentServer_toolbar_label "><label class="js-ws developmentServer_label"></label></div></div><script src="/developmentServer/toolbar/toolbar.js"></script>',
-        header = '<script src="/developmentServer/extend.js"></script><script src="/developmentServer/livereload.js"></script><link rel="stylesheet" media="screen" href="/developmentServer/toolbar/toolbar.css">',
+    var header = '<script src="/developmentServer/extend.js"></script><script src="/developmentServer/livereload.js"></script><link rel="stylesheet" media="screen" href="/developmentServer/toolbar/toolbar.css">',
         ignore = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
             /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/,
             /\.json(\?.*)?$/

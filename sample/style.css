@@ -59,7 +59,7 @@ nav {
     box-sizing: border-box;
     margin: 5px 0 0 0;
     border: 1px solid #cdc6c6;
-    overflow: visible;
+    overflow: auto;
 }
 
 nav>a {
@@ -95,10 +95,6 @@ article {
 
 .toolbar {
     border: 1px solid #e4e9ef;
-    /*border-right: 0;
-    border-top: 0;
-    border-bottom-left-radius: 3pt;
-    border-bottom-right-radius: 3pt;*/
     position: relative;
     width: 600px;
     font-family: fira-sans, sans-serif;
@@ -108,7 +104,6 @@ article {
     font-size: 13px;
     background: #e0e2e4;
     box-sizing: border-box;
-    /*margin-left: 36px;*/
 }
 
 .toolbar span {
@@ -139,9 +134,9 @@ article {
     color: white;
     padding: 0 10px;
     font-weight: bold;
-    margin: 0px;
+    margin: 0;
     text-shadow: 0px 1px 0 #11b53c;
-    height: 30px;
+    height: 29px;
     line-height: 30px;
     font-family: fira-sans, sans-serif;
     font-size: 13px;
@@ -151,4 +146,32 @@ article {
 
 .run-button:hover {
     background: #11b53c;
+}
+
+.message ul,.meeage li{
+    list-style: none;
+}
+.message-list{
+    position: relative;
+}
+.message-list::before{
+    content: '';
+    width: 3px;
+    background: #00c72b;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+.message-list li{
+     position: relative;
+}
+
+.message-list li::before{
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: orange;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
 }

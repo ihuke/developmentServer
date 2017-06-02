@@ -1,5 +1,6 @@
 (function ($) {
     var client,
+        messageList,
         factory = {
             get: get,
             post: post,
@@ -24,8 +25,8 @@
     function sendMessage() {
         if (client) {
             client.send(JSON.stringify({
-                aa: 1,
-                bb: 2
+                command: 'ws',
+                data: 'request'
             }));
         }
     }
@@ -41,6 +42,7 @@
     function handleMessage(e) {
         if (e && e.data) {
             console.log(e.data);
+            updateElement(e.data.result);
         }
     }
 
@@ -62,22 +64,24 @@
     }
 
     function get() {
-        $.get('/api/get', function (data) {
+        $.get('/api/get', function (result) {
                 console.log('/api/get result:');
-                console.log(data);
+                console.log(result);
+                updateElement(result.data);
             })
             .fail(function () {
-                alert("error");
+                alert("http[get] error!");
             });
     }
 
     function post() {
-        $.post('/api/post', function (data) {
+        $.post('/api/post', function (result) {
                 console.log('/api/post result:');
-                console.log(data);
+                console.log(result);
+                updateElement(result.warp.data);
             })
             .fail(function () {
-                alert("error");
+                alert("http[post] error!");
             });
     }
 
@@ -91,4 +95,14 @@
             factory[type]();
         }
     });
+
+    function updateElement(data){
+        var li = document.createElement('li');
+        var container = document.createElement('div');
+        container.innerHTML = '<div>' + data + '</div>';
+        li.appendChild(container);
+        messageList = messageList || document.querySelector('.message-list');
+        messageList.appendChild(li);
+        li.scrollIntoView(false);
+    }
 })($);

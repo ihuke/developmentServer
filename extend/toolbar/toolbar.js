@@ -4,14 +4,14 @@
  * 
  * @author huk/2016.10.20
  */
-window.developmnetServer = window.developmnetServer || {};
+window.developmentServer = window.developmentServer || {};
 (function (server) {
     var playBtn, stopBtn, http, websocket;
     /**
      * begin record
      */
     function play() {
-        server.recording = true;
+        updateStatus(server.recording = true);
         toggle(playBtn, stopBtn);
     }
 
@@ -19,15 +19,22 @@ window.developmnetServer = window.developmnetServer || {};
      * stop record
      */
     function stop() {
-        server.recording = false;
+        updateStatus(server.recording = false);
         toggle(playBtn, stopBtn);
+        
+    }
+
+    function updateStatus(status) {
+        var ele = document.querySelector('.developmentServer_toolbar .js-status');
+        ele.innerText = status ? 'processing' : 'stop';
     }
 
     /**
      * save record result
      */
     function save() {
-        if (Array.isArray(server.http) || Array.isArray(server.websocket)) {
+        if ((Array.isArray(server.http) && server.http.length > 0) ||
+            (Array.isArray(server.websocket) && server.websocket.length > 0)) {
             var result = generateContent();
             if (result) {
                 downloadFile(result, function () {
@@ -93,7 +100,7 @@ window.developmnetServer = window.developmnetServer || {};
         }, 100);
     }
 
-    function registeEvent(element, func) {
+    function registerEvent(element, func) {
         element.addEventListener('click', func, false);
     }
 
@@ -133,9 +140,9 @@ window.developmnetServer = window.developmnetServer || {};
     onReady(function () {
         http = document.querySelector('.developmentServer_toolbar .js-http');
         websocket = document.querySelector('.developmentServer_toolbar .js-ws');
-        registeEvent(playBtn = document.querySelector('.developmentServer_toolbar .js-play'), play);
-        registeEvent(stopBtn = document.querySelector('.developmentServer_toolbar .js-stop'), stop);
-        registeEvent(document.querySelector('.developmentServer_toolbar .js-download'), save);
+        registerEvent(playBtn = document.querySelector('.developmentServer_toolbar .js-play'), play);
+        registerEvent(stopBtn = document.querySelector('.developmentServer_toolbar .js-stop'), stop);
+        registerEvent(document.querySelector('.developmentServer_toolbar .js-download'), save);
         update();
     });
-})(window.developmnetServer);
+})(window.developmentServer);

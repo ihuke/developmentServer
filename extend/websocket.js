@@ -3,13 +3,13 @@
  * 
  * @author huk/2016.10.16
  */
-window.developmnetServer = window.developmnetServer || {};
-(function (developmnetServer) {
-    var cache = developmnetServer.websocket = developmnetServer.websocket || [],
+window.developmentServer = window.developmentServer || {};
+(function (developmentServer) {
+    var cache = developmentServer.websocket = developmentServer.websocket || [],
         sendMethod = WebSocket.prototype.send;
 
     WebSocket.prototype.send = function () {
-        if (developmnetServer.recording) {
+        if (developmentServer.recording) {
             cache.push({
                 url: this.url,
                 request: arguments[0]
@@ -18,11 +18,11 @@ window.developmnetServer = window.developmnetServer || {};
 
         if (this.addEventListener) {
             this.addEventListener('message', function (e) {
-                if (developmnetServer.recording && cache.length) {
+                if (developmentServer.recording && cache.length) {
                     var item = cache[cache.length - 1];
                     if (!item.response && e && e.data) {
                         item.response = e.data;
-                        developmnetServer.notify && developmnetServer.notify();
+                        developmentServer.notify && developmentServer.notify();
                     }
                     console.log(item);
                 }
@@ -31,4 +31,4 @@ window.developmnetServer = window.developmnetServer || {};
 
         sendMethod.apply(this, arguments);
     }
-})(window.developmnetServer);
+})(window.developmentServer);

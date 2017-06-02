@@ -1,12 +1,23 @@
-<div class="developmentServer_toolbar">
+<div class="developmentServer_toolbar" draggable="true">
+	<div class="drag-area"></div>
 	<div class="developmentServer_toolbar_item js-play">
 		<div class="play icon"></div>
+		<a class="developmentServer_toolbar_title" title="Start Record"></a>
 	</div>
 	<div class="developmentServer_toolbar_item active js-stop remove">
 		<div class="stop icon"></div>
+		<a class="developmentServer_toolbar_title" title="Stop"></a>
 	</div>
 	<div class="developmentServer_toolbar_item js-download">
 		<div class="download icon"></div>
+		<a class="developmentServer_toolbar_title" title="Download Record File"></a>
+	</div>
+	<div class="developmentServer_toolbar_label ">
+		<label class="developmentServer_label">|</label>
+	</div>
+	<div class="developmentServer_toolbar_label ">
+		<label class="developmentServer_label">Record:</label>
+		<label class="js-status developmentServer_label developmentServer_label_status">Stop</label>
 	</div>
 	<div class="developmentServer_toolbar_label ">
 		<label class="developmentServer_label">|</label>

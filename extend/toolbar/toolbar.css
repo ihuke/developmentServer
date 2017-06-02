@@ -2,14 +2,30 @@
     position: fixed;
     top: 0;
     left: 50%;
+    padding: 0 0 0 3px;
     -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
-    padding: 5px;
-    background: #90e6e6;
-    border-radius: 2px;
-    box-shadow: 0 0 5px #aac5c5;
+    background: #DDD;
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0 0 5px #bdbdbd;
     box-sizing: content-box;
     font-size: 13px;
+    display: flex;
+}
+
+.developmentServer_toolbar .drag-area{
+    cursor: -webkit-grab;
+    margin: 0 3px;
+    width: 10px;
+    background: url(drag.svg) 50% no-repeat;
+}
+
+.developmentServer_toolbar .developmentServer_toolbar_title {
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    top: 6px;
+    left: 6px;
 }
 
 .developmentServer_toolbar * {
@@ -64,6 +80,13 @@
     vertical-align: middle;
 }
 
+.developmentServer_toolbar .developmentServer_label_status {
+    color: #eee;
+    background-color: #458ece;
+    padding: 2px;
+    border-radius: 3px;
+}
+
 .developmentServer_toolbar .developmentServer_toolbar_label label {
     display: inline;
 }
@@ -71,7 +94,6 @@
 .developmentServer_toolbar .developmentServer_toolbar_item:hover {
     border-color: #356;
     cursor: pointer;
-    /*border-color: #19d599;*/
 }
 
 .developmentServer_toolbar .active {
@@ -90,8 +112,8 @@
 }
 
 .developmentServer_toolbar .developmentServer_toolbar_item .play.icon {
-    margin-left: 5px;
-    margin-top: 3px;
+    margin-left: 6px;
+    margin-top: 4px;
     width: 0;
     height: 0;
     border-left: solid 11px #333333;

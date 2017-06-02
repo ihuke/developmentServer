@@ -24,17 +24,14 @@ module.exports = exports = (app, server, config, environment) => {
         const api = http[path],
             method = getMethod(api.method);
 
-        if (api.onResult) {
-            onResult = api.onResult;
-        }
-
         app[method](path, (req, res, next) => {
+            const resultHandler = onResult || api.onResult;
             if (utils.isFunction(api.onResponse)) {
-                api.onResponse(api, onResult, environment, req, res, next);
+                api.onResponse(api, resultHandler, environment, req, res, next);
             } else if (api.type && processors[api.type]) {
-                processors[api.type](api, onResult, environment, true, req, res, next);
+                processors[api.type](api, resultHandler, environment, true, req, res, next);
             } else {
-                defaultProcessor(api, onResult, environment, req, res, next);
+                defaultProcessor(api, resultHandler, environment, req, res, next);
             }
         });
     });
