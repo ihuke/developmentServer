@@ -7,9 +7,8 @@ developmentServer is a productivity tool for frontend to improve product develop
 - lightweight webServer for vs code  
   ![command](./doc/open.gif)
 
-- livereload when file(js/css/html) updated
-
-- ~~automatically generate .css file for less/sass/scss~~
+- livereload  
+  auto refresh browser when js/css/html file updated.
 
 - mock server
   * support HTTP Web API
@@ -20,7 +19,8 @@ developmentServer is a productivity tool for frontend to improve product develop
     > declare "websocket" section in mock file  
     ![websocket](./doc/mock_websocket.jpg)
 
-- record and generate mock data on real request/response,support xmlhttprequest and websocket
+- record toolbar  
+  it can record response data after real request,support xmlhttprequest and websocket.So you can easy generate mock file.
 
 ## How to customize
   TODO

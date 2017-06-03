@@ -25,8 +25,11 @@
     function sendMessage() {
         if (client) {
             client.send(JSON.stringify({
-                command: 'ws',
-                data: 'request'
+                command: 'add',
+                data: {
+                    v1: 5,
+                    v2: 8
+                }
             }));
         }
     }
@@ -41,9 +44,20 @@
 
     function handleMessage(e) {
         if (e && e.data) {
+            var temp = JSON.parse(e.data);
             console.log(e.data);
-            updateElement(e.data.result);
+            updateElement(getTime(), 'WebSocket', 'Value is ' + temp.result);
         }
+    }
+
+    function getTime() {
+        var time = new Date();
+        var hour = time.getHours(),
+            minute = time.getMinutes(),
+            second = time.getSeconds();
+        return (hour < 10 ? ('0' + hour) : hour) + ':' +
+            (minute < 10 ? ('0' + minute) : minute) + ':' +
+            (second < 10 ? ('0' + second) : second);
     }
 
     function getChecked() {
@@ -64,10 +78,10 @@
     }
 
     function get() {
-        $.get('/api/get', function (result) {
-                console.log('/api/get result:');
+        $.get('/api/user', function (result) {
+                console.log('/api/user result:');
                 console.log(result);
-                updateElement(result.data);
+                updateElement(getTime(), 'HTTP-GET', 'User name is ' + result.data.name);
             })
             .fail(function () {
                 alert("http[get] error!");
@@ -75,10 +89,10 @@
     }
 
     function post() {
-        $.post('/api/post', function (result) {
-                console.log('/api/post result:');
+        $.post('/api/update', function (result) {
+                console.log('/api/update result:');
                 console.log(result);
-                updateElement(result.warp.data);
+                updateElement(getTime(), 'HTTP-POST', 'Register User Tom ' + (result.code === 100 ? 'success' : 'failed'));
             })
             .fail(function () {
                 alert("http[post] error!");
@@ -96,10 +110,11 @@
         }
     });
 
-    function updateElement(data){
-        var li = document.createElement('li');
-        var container = document.createElement('div');
-        container.innerHTML = '<div>' + data + '</div>';
+    function updateElement(time, type, data) {
+        var li = document.createElement('li'),
+            container = document.createElement('div');
+        container.innerHTML = '<div class="message-title"><span>' + time + '</span><span style="margin-left:3px">' +
+            type + '</span></div><div class="message-body">[Server] ' + data + '</div>';
         li.appendChild(container);
         messageList = messageList || document.querySelector('.message-list');
         messageList.appendChild(li);

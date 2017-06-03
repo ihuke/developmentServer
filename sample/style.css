@@ -59,7 +59,8 @@ nav {
     box-sizing: border-box;
     margin: 5px 0 0 0;
     border: 1px solid #cdc6c6;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 nav>a {
@@ -156,8 +157,8 @@ article {
 }
 .message-list::before{
     content: '';
-    width: 3px;
-    background: #00c72b;
+    width: 2px;
+    background: #cdc6c6;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -168,10 +169,54 @@ article {
 
 .message-list li::before{
     content: '';
-    width: 10px;
-    height: 10px;
-    background-color: orange;
+    width: 16px;
+    height: 16px;
+    background-color: #46a4da;
     border-radius: 50%;
     position: absolute;
     top: 0;
+
+    
+    
+    line-height: 16px;
+    
+    color: #fff;
+    background: #46a4da;
+    box-shadow: 0 0 0 8px #afdcf8;
+    text-align: center;
+    left: -6px;
+    top: 0;
+    /*margin: 0 0 0 -25px;*/
+}
+
+.message-list li::after{
+    content: '';
+    height: 20px;
+    display: table;
+}
+
+.message-list li:last-child::after{
+    height: 5px;
+}
+
+.message-list li>div{
+    position: relative;
+    left: 30px;
+    padding: 20px;
+    font-size: 13px;
+}
+
+.message-list li >div .message-title{
+    position: absolute;
+    top:-5px;
+    background: rgba(217,100,17,1.0);
+    padding: .5em 1.5em .55em;
+    border-radius: 2em;
+    color: #FFF;
+}
+
+.message-list li > div .message-body{
+    position: relative;
+    top: 13px;
+    left: 20px;
 }
