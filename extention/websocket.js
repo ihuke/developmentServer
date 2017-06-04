@@ -22,7 +22,7 @@ module.exports = exports = function (app, server, config, environment) {
         return;
     }
 
-    const websocket = config.mock.websocket,
+    let websocket = config.mock.websocket,
         WebSocket = require('ws').Server,
         wsServer = new WebSocket({
             server: server
@@ -38,6 +38,13 @@ module.exports = exports = function (app, server, config, environment) {
             onMessage(message, socket, mock, processors, environment);
         });
     });
+
+    return function(){
+        if(wsServer){
+            wsServer.close();
+            wsServer = null;
+        }
+    }
 }
 
 /**

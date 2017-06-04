@@ -15,11 +15,12 @@ module.exports = exports = function (app, server, config, environment) {
         watchDirs
     } = config,
     port = 35729;
-    let isChanged = false;
+    let isChanged = false,
+        wsServer;
 
     if (Array.isArray(watchDirs)) {
-        const wsServer = createWSServer(config.livePort || port, server),
-            watch = require('node-watch');
+        wsServer = createWSServer(config.livePort || port, server);
+        const watch = require('node-watch');
 
         wsServer.on('connection', socket => {
             socket.send(JSON.stringify({
@@ -54,8 +55,13 @@ module.exports = exports = function (app, server, config, environment) {
             console.log(`livereload watch:${dir}`);
         });
 
-        return function () {
-            if (isChanged) {
+        return function (status) {
+            if (typeof status === 'undefined') {
+                if (wsServer) {
+                    wsServer.close();
+                    wsServer = null;
+                }
+            } else if (isChanged) {
                 isChanged = false;
                 sendCommand(wsServer, {
                     command: 'reload',

@@ -82,7 +82,9 @@ module.exports = class Server {
         return new Promise((resolve, reject) => {
             if (this.server) {
                 this.environment.log(`devServer is stopping`);
+                this.releaseExtentions();
                 this.server.close(() => {
+                    console.log('server close')
                     this.dispose();
                     resolve('devServer stopped');
                 });
@@ -107,7 +109,7 @@ module.exports = class Server {
      * 
      */
     toggle() {
-        
+
 
     }
 
@@ -138,6 +140,14 @@ module.exports = class Server {
             }
         } = this.config;
         utils.registeExtentions(app, server, this.config, this.environment, post);
+    }
+
+    /**
+     * release extentions
+     * 
+     */
+    releaseExtentions() {
+        utils.releaseExtentions();
     }
 
     /**
@@ -175,6 +185,7 @@ module.exports = class Server {
     }
 
     dispose() {
+        //this.releaseExtentions();
         this.server = null;
         this.config = null;
         //this.environment.dispose();

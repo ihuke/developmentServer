@@ -8,9 +8,10 @@ developmentServer is a productivity tool for frontend to improve product develop
   ![command](./doc/open.gif)
 
 - livereload  
-  auto refresh browser when js/css/html file updated.
+  Auto refresh browser when js/css/html file updated.
 
-- mock server
+- mock server  
+  As local mock server for developer  
   * support HTTP Web API
     > declare "http" section in mock file  
     ![http](./doc/mock_http.jpg)
@@ -20,7 +21,7 @@ developmentServer is a productivity tool for frontend to improve product develop
     ![websocket](./doc/mock_websocket.jpg)
 
 - record toolbar  
-  it can record response data after real request,support xmlhttprequest and websocket.So you can easy generate mock file.
+  It can record and download response data after real request,support xmlhttprequest and websocket.So user can easy generate mock file.
 
 ## How to customize
   TODO

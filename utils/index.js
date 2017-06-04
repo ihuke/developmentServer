@@ -8,6 +8,11 @@ const path = require('path'),
  * @author huk/2016.09.28
  */
 class Utils {
+
+    constructor() {
+        this.appExtentions = {};
+    }
+
     /**
      * set rootPath
      * 
@@ -169,21 +174,46 @@ class Utils {
      * @memberOf Utils
      */
     registeExtentions(app, server, config, environment, extentions) {
+        let $extentions = this.appExtentions;
         extentions.forEach(item => {
             const extention = this.checkAndImportModule(item.path, `../extention/${item}`);
             if (this.isFunction(extention)) {
-                try{
-                   let callback = extention(app, server, config, environment);
-                   if(callback){
-                       app.$extentions = app.$extentions || {};
-                       app.$extentions[item] = callback;
-                   }
-                }catch(error){
+                try {
+                    let callback = extention(app, server, config, environment);
+                    if (callback) {
+                        //app.$extentions = app.$extentions || {};
+                        $extentions[item] = callback;
+                    }
+                } catch (error) {
                     console.log(`register ${item} failure.`)
                     console.log(error);
                 }
             }
         });
+    }
+
+    /**
+     * 
+     * releaseExtentions
+     * @param {any} app 
+     * 
+     * @memberof Utils
+     */
+    releaseExtentions() {
+        console.log('release begin.')
+        if (this.appExtentions) {
+            let extentions = this.appExtentions;
+            Object.keys(this.appExtentions).forEach(key => {
+                if (typeof extentions[key] === 'function') {
+                    try {
+                        extentions[key]();
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            });
+        }
+        console.log('release end.')
     }
 
     /**
