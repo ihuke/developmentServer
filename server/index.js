@@ -128,8 +128,8 @@ module.exports = class Server {
      * 
      */
     toggle() {
-
-
+        config.liveReload = !config.liveReload;
+        utils.updateExtention(config.liveReload);
     }
 
     /**

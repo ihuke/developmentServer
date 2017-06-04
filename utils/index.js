@@ -216,6 +216,12 @@ class Utils {
         console.log('release end.')
     }
 
+    updateExtention(key,params){
+        if(this.appExtentions[key]){
+            this.appExtentions[key](params);
+        }
+    }
+
     /**
      * registe express middleware
      * 
