@@ -67,8 +67,27 @@ module.exports = class Server {
                     .on('request', (req, res) => {
                         this.environment.log(`${req.method} ${req.originalUrl}`);
                     });
+                this.enableDestroy(this.server);
             }
         });
+    }
+
+    enableDestroy(server) {
+        let connections = {};
+
+        server.on('connection', function (conn) {
+            var key = conn.remoteAddress + ':' + conn.remotePort;
+            connections[key] = conn;
+            conn.on('close', function () {
+                delete connections[key];
+            });
+        });
+
+        server.destroy = function (cb) {
+            server.close(cb);
+            for (var key in connections)
+                connections[key].destroy();
+        };
     }
 
     /**
@@ -83,7 +102,7 @@ module.exports = class Server {
             if (this.server) {
                 this.environment.log(`devServer is stopping`);
                 this.releaseExtentions();
-                this.server.close(() => {
+                this.server.destroy(() => {
                     console.log('server close')
                     this.dispose();
                     resolve('devServer stopped');
