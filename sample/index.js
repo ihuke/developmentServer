@@ -103,7 +103,7 @@
         $.post('/api/update', function (result) {
                 console.log('/api/update result:');
                 console.log(result);
-                updateElement(model.POST, type.SUCCESS, 'Register User Tom ' + (result.code === 100 ? 'success' : 'failed'));
+                updateElement(model.POST, type.SUCCESS, 'Register User Tom ' + (result.code === 200 ? 'success' : 'failed'));
             })
             .fail(function () {
                 updateElement(model.POST, type.FAILURE, 'HTTP-POST is failure');
