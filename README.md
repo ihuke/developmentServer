@@ -14,20 +14,22 @@ developmentServer is a productivity tool for frontend to improve product develop
   As local mock server for developer  
   * support HTTP Web API
     > declare "http" section in mock file  
-    ![http](./doc/mock_http.jpg)
+    ![http](./doc/http.png)
 
   * support websocket API
     > declare "websocket" section in mock file  
-    ![websocket](./doc/mock_websocket.jpg)
+    ![websocket](./doc/websocket.png)
 
 - record toolbar  
-  It can record and download response data after real request,support xmlhttprequest and websocket.So user can easy generate mock file.
+  It can record and download response data after real request,support xmlhttprequest and websocket.So user can easy generate mock file.  
+  ![toolbar](./doc/toolbar.png)
 
 ## How to customize
   TODO
 
 ## Sample
->Use VS Code open the [Sample](https://github.com/ihuke/developmentServer/sample)
+>Use VS Code open the [Sample](https://github.com/ihuke/developmentServer/sample)  
+![sample](./doc/sample.png)
 
 ## Author
 

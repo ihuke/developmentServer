@@ -5,6 +5,15 @@
             get: get,
             post: post,
             socket: socket
+        },
+        model = {
+            GET: 'HTTP-GET',
+            POST: 'HTTP-POST',
+            WS: 'WebSocket'
+        },
+        type = {
+            FAILURE: 0,
+            SUCCESS: 1
         };
 
     function create(uri) {
@@ -23,7 +32,7 @@
     }
 
     function sendMessage() {
-        if (client) {
+        if (client.readyState === 1) {
             client.send(JSON.stringify({
                 command: 'add',
                 data: {
@@ -31,6 +40,8 @@
                     v2: 8
                 }
             }));
+        } else {
+            updateElement(model.WS, type.FAILURE, 'WebSocket is CLOSED');
         }
     }
 
@@ -46,7 +57,7 @@
         if (e && e.data) {
             var temp = JSON.parse(e.data);
             console.log(e.data);
-            updateElement(getTime(), 'WebSocket', 'Value is ' + temp.result);
+            updateElement(model.WS, type.SUCCESS, 'Value is ' + temp.result);
         }
     }
 
@@ -81,10 +92,10 @@
         $.get('/api/user', function (result) {
                 console.log('/api/user result:');
                 console.log(result);
-                updateElement(getTime(), 'HTTP-GET', 'User name is ' + result.data.name);
+                updateElement(model.GET, type.SUCCESS, 'User name is ' + result.data.name);
             })
             .fail(function () {
-                alert("http[get] error!");
+                updateElement(model.GET, type.FAILURE, 'HTTP-GET is failure');
             });
     }
 
@@ -92,10 +103,10 @@
         $.post('/api/update', function (result) {
                 console.log('/api/update result:');
                 console.log(result);
-                updateElement(getTime(), 'HTTP-POST', 'Register User Tom ' + (result.code === 100 ? 'success' : 'failed'));
+                updateElement(model.POST, type.SUCCESS, 'Register User Tom ' + (result.code === 100 ? 'success' : 'failed'));
             })
             .fail(function () {
-                alert("http[post] error!");
+                updateElement(model.POST, type.FAILURE, 'HTTP-POST is failure');
             });
     }
 
@@ -110,11 +121,12 @@
         }
     });
 
-    function updateElement(time, type, data) {
-        var li = document.createElement('li'),
+    function updateElement(model, type, data) {
+        var time = getTime(),
+            li = document.createElement('li'),
             container = document.createElement('div');
         container.innerHTML = '<div class="message-title"><span>' + time + '</span><span style="margin-left:3px">' +
-            type + '</span></div><div class="message-body">[Server] ' + data + '</div>';
+            model + '</span></div><div class="message-body">' + (type === 1 ? '[Server] ' : '<span style="color:red">[Error] </span>') + data + '</div>';
         li.appendChild(container);
         messageList = messageList || document.querySelector('.message-list');
         messageList.appendChild(li);
