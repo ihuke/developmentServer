@@ -3,7 +3,7 @@
   "displayName": "devServer",
   "description": "a lightweight webServer for developer,which support auto launches browser, livereload,as local mock server.",
   "version": "0.0.2",
-  "publisher": "huke",
+  "publisher": "ihuke",
   "engines": {
     "vscode": "^1.4.0"
   },
