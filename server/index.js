@@ -204,7 +204,6 @@ module.exports = class Server {
     }
 
     dispose() {
-        //this.releaseExtentions();
         this.server = null;
         this.config = null;
         //this.environment.dispose();

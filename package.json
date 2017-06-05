@@ -1,8 +1,8 @@
 {
   "name": "devServer",
   "displayName": "devServer",
-  "description": "a light weight express server for development,which support livereload,websocket,mock test and auto complie css.",
-  "version": "0.0.1",
+  "description": "a lightweight webServer for developer,which support auto launches browser, livereload,as local mock server.",
+  "version": "0.0.2",
   "publisher": "huke",
   "engines": {
     "vscode": "^1.4.0"
