@@ -4,8 +4,9 @@ developmentServer is a productivity tool for frontend to improve product develop
 
 ## Features
 
-- lightweight webServer for vs code  
-  ![command](./doc/open.gif)
+- lightweight webServer for vs code   
+  type "devServer start/stop"  
+  ![command](doc/open.gif)
 
 - livereload  
   Auto refresh browser when js/css/html file updated.
@@ -14,22 +15,22 @@ developmentServer is a productivity tool for frontend to improve product develop
   As local mock server for developer  
   * support HTTP Web API
     > declare "http" section in mock file  
-    ![http](./doc/http.png)
+    ![http](doc/http.png)
 
   * support websocket API
     > declare "websocket" section in mock file  
-    ![websocket](./doc/websocket.png)
+    ![websocket](doc/websocket.png)
 
 - record toolbar  
   It can record and download response data after real request,support xmlhttprequest and websocket.So user can easy generate mock file.  
-  ![toolbar](./doc/toolbar.png)
+  ![toolbar](doc/toolbar.png)
 
 ## How to customize
   TODO
 
 ## Sample
->Use VS Code open the [Sample](https://github.com/ihuke/developmentServer/sample)  
-![sample](./doc/sample.png)
+>Use VS Code open the [Sample](https://github.com/ihuke/developmentServer/tree/master/sample)  
+![sample](doc/sample.png)
 
 ## Author
 
