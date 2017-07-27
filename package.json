@@ -1,52 +1,58 @@
 {
-  "name": "devServer",
-  "displayName": "devServer",
-  "description": "a lightweight webServer for developer,which support auto launches browser, livereload,as local mock server.",
-  "version": "0.0.3",
-  "publisher": "ihuke",
-  "engines": {
-    "vscode": "^1.4.0"
-  },
-  "Repository": {
-    "type": "git",
-    "url": "https://github.com/ihuke/developmentServer.git"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:server.start",
-    "onCommand:server.stop",
-    "onCommand:server.restart",
-    "onCommand:server.open",
-    "onCommand:server.beginLiveReload",
-    "onCommand:server.stopLiveReload"
-  ],
-  "main": "./extension",
-  "contributes": {
-    "commands": [{
-        "command": "server.start",
-        "title": "devServer: Start"
-      },
-      {
-        "command": "server.stop",
-        "title": "devServer: Stop"
-      }
-    ]
-  },
-  "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install"
-  },
-  "dependencies": {
-    "csserror": "^2.0.2",
-    "express": "^4.14.0",
-    "gaze": "^1.1.1",
-    "less": "^2.7.1",
-    "open": "0.0.5",
-    "ws": "^1.1.1",
-    "xml2js": "^0.4.17"
-  },
-  "devDependencies": {
-    "vscode": "^0.11.0"
-  }
+    "name": "devServer",
+    "displayName": "devServer",
+    "description": "a lightweight webServer for developer,which support auto launches browser, livereload,as local mock server.",
+    "version": "0.0.3",
+    "publisher": "ihuke",
+    "engines": {
+        "vscode": "^1.4.0"
+    },
+    "Repository": {
+        "type": "git",
+        "url": "https://github.com/ihuke/developmentServer.git"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:server.start",
+        "onCommand:server.startWithBar",
+        "onCommand:server.stop",
+        "onCommand:server.restart",
+        "onCommand:server.open",
+        "onCommand:server.startLive",
+        "onCommand:server.stopLive"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "commands": [{
+                "command": "server.start",
+                "title": "devServer: Start"
+            },
+            {
+                "command": "server.startWithBar",
+                "title": "devServer: StartWithBar"
+            },
+            {
+                "command": "server.stop",
+                "title": "devServer: Stop"
+            }
+        ]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "dependencies": {
+        "csserror": "^2.0.2",
+        "express": "^4.14.0",
+        "gaze": "^1.1.1",
+        "less": "^2.7.1",
+        "node-watch": "^0.5.5",
+        "open": "0.0.5",
+        "ws": "^1.1.1",
+        "xml2js": "^0.4.17"
+    },
+    "devDependencies": {
+        "vscode": "^0.11.0"
+    }
 }

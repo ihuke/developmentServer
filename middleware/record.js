@@ -10,7 +10,7 @@ const utils = require('../utils'),
  * @param {any} environment
  * @author huk/2016.10.17
  */
-module.exports = exports = function (app, config, environment) {
+module.exports = exports = function(app, config, environment) {
     var header = '<script src="/developmentServer/extend.js"></script><script src="/developmentServer/livereload.js"></script><link rel="stylesheet" media="screen" href="/developmentServer/toolbar/toolbar.css">',
         ignore = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
             /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/,
@@ -24,8 +24,8 @@ module.exports = exports = function (app, config, environment) {
             fn: prepend
         }];
 
-    var regex = (function () {
-        var matches = rules.map(function (item) {
+    var regex = (function() {
+        var matches = rules.map(function(item) {
             return item.match.source;
         }).join('|');
 
@@ -62,7 +62,7 @@ module.exports = exports = function (app, config, environment) {
     function injectHeader(body, host) {
         var rule = /<head>/;
         if (rule.test(body)) {
-            body = body.replace(rule, function (w) {
+            body = body.replace(rule, function(w) {
                 return w + header;
             });
         }
@@ -72,9 +72,9 @@ module.exports = exports = function (app, config, environment) {
     function injectBody(body, host) {
         var _body = body;
         let content = utils.readFile(path.join(utils.getCurrentPath(), "extend/toolbar/toolbar.html"))
-        rules.some(function (rule) {
+        rules.some(function(rule) {
             if (rule.match.test(body)) {
-                _body = body.replace(rule.match, function (w) {
+                _body = body.replace(rule.match, function(w) {
                     return rule.fn(w, content);
                 });
                 return true;
@@ -92,7 +92,7 @@ module.exports = exports = function (app, config, environment) {
 
     function check(str, arr) {
         if (!str) return true;
-        return arr.some(function (item) {
+        return arr.some(function(item) {
             if ((item.test && item.test(str)) || ~str.indexOf(item)) return true;
             return false;
         });
@@ -100,7 +100,7 @@ module.exports = exports = function (app, config, environment) {
 
     const express = require('express');
     app.use('/developmentServer', express.static(path.join(utils.getCurrentPath(), "extend")));
-    return function (req, res, next) {
+    return function(req, res, next) {
         var runPatches = true,
             writeHead = res.writeHead,
             write = res.write,
@@ -116,11 +116,11 @@ module.exports = exports = function (app, config, environment) {
             return next();
         }
 
-        res.push = function (chunk) {
+        res.push = function(chunk) {
             res.data = (res.data || '') + chunk;
         };
 
-        res.write = function (string, encoding) {
+        res.write = function(string, encoding) {
             if (!runPatches) {
                 return write.call(res, string, encoding);
             }
@@ -130,8 +130,7 @@ module.exports = exports = function (app, config, environment) {
                 if (exists(body) && !isInject(res.data)) {
                     res.push(inject(body, host));
                     return true;
-                }
-                else {
+                } else {
                     res.push(body);
                     return true;
                 }
@@ -139,7 +138,7 @@ module.exports = exports = function (app, config, environment) {
             return true;
         };
 
-        res.writeHead = function () {
+        res.writeHead = function() {
             if (!runPatches) return writeHead.apply(res, arguments);
 
             var headers = arguments[arguments.length - 1];
@@ -156,7 +155,7 @@ module.exports = exports = function (app, config, environment) {
             writeHead.apply(res, arguments);
         };
 
-        res.end = function (string, encoding) {
+        res.end = function(string, encoding) {
             if (!runPatches) {
                 return end.call(res, string, encoding);
             }
@@ -169,6 +168,7 @@ module.exports = exports = function (app, config, environment) {
             }
             if (res.data !== undefined && !res._header) {
                 res.setHeader('content-length', Buffer.byteLength(res.data, encoding));
+                res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
             }
             end.call(res, res.data, encoding);
         };

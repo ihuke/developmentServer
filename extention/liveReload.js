@@ -10,7 +10,7 @@ const fs = require('fs'),
  * @param {any} environment
  * @author huk/2016.09.27
  */
-module.exports = exports = function (app, server, config, environment) {
+module.exports = exports = function(app, server, config, environment) {
     const {
         watchDirs
     } = config,
@@ -35,8 +35,10 @@ module.exports = exports = function (app, server, config, environment) {
             });
         });
 
-        watchDirs.forEach(function (dir) {
-            watch(dir, function (file) {
+        watchDirs.forEach(function(dir) {
+            watch(dir, {
+                recursive: true
+            }, function(evt, file) {
                 if (app.liveReload || config.liveReload) {
                     isChanged = false;
                     if (checkFile(file)) {
@@ -55,7 +57,7 @@ module.exports = exports = function (app, server, config, environment) {
             console.log(`livereload watch:${dir}`);
         });
 
-        return function (status) {
+        return function(status) {
             if (typeof status === 'undefined') {
                 if (wsServer) {
                     wsServer.close();

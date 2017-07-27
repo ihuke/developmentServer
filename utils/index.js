@@ -93,10 +93,11 @@ class Utils {
         let fileInfo = this.getfsInfo(filePath);
         if (fileInfo && fileInfo.isFile) {
             return filePath;
-        } else {
-            let truePath = path.resolve(rootPath, filePath);
-            return this.generateFilePath(truePath, rootPath);
         }
+        /*else {
+                   let truePath = path.resolve(rootPath, filePath);
+                   return this.generateFilePath(truePath, rootPath);
+               }*/
     }
 
     /**
@@ -216,8 +217,8 @@ class Utils {
         console.log('release end.')
     }
 
-    updateExtention(key,params){
-        if(this.appExtentions[key]){
+    updateExtention(key, params) {
+        if (this.appExtentions[key]) {
             this.appExtentions[key](params);
         }
     }
@@ -231,10 +232,13 @@ class Utils {
      * @memberOf Utils
      */
     registeMiddleWares(app, config, environment, middlewares) {
+        //var isUndefined = this.isUndefined;
         middlewares.forEach(item => {
-            const middleware = this.checkAndImportModule(item.path, `../middleware/${item}`);
-            if (this.isFunction(middleware)) {
-                app.use(middleware(app, config, environment));
+            if (this.isUndefined(config[item]) || config[item]) {
+                const middleware = this.checkAndImportModule(item.path, `../middleware/${item}`);
+                if (this.isFunction(middleware)) {
+                    app.use(middleware(app, config, environment));
+                }
             }
         });
     }

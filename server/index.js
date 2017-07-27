@@ -19,11 +19,11 @@ module.exports = class Server {
      * 
      * @param {Environment} environment
      */
-    initilize(environment) {
+    initilize(environment, parameter) {
         this.environment = environment;
 
         if (!this.config) {
-            this.config = getConfiguration();
+            this.config = getConfiguration(parameter);
         }
     }
 
@@ -34,8 +34,8 @@ module.exports = class Server {
      * 
      * @memberOf Server
      */
-    start(environment) {
-        this.initilize(environment);
+    start(environment, parameter) {
+        this.initilize(environment, parameter);
         return new Promise((resolve, reject) => {
             const {
                 port,
@@ -75,15 +75,15 @@ module.exports = class Server {
     enableDestroy(server) {
         let connections = {};
 
-        server.on('connection', function (conn) {
+        server.on('connection', function(conn) {
             var key = conn.remoteAddress + ':' + conn.remotePort;
             connections[key] = conn;
-            conn.on('close', function () {
+            conn.on('close', function() {
                 delete connections[key];
             });
         });
 
-        server.destroy = function (cb) {
+        server.destroy = function(cb) {
             server.close(cb);
             for (var key in connections)
                 connections[key].destroy();

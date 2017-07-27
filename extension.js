@@ -10,12 +10,30 @@ function activate(context) {
     let environment;
     const app = new Server(context.extensionPath);
 
-    context.subscriptions.push(vscode.commands.registerCommand('server.start', () => {
+    context.subscriptions.push(vscode.commands.registerCommand('server.startWithBar', () => {
         if (!vscode.workspace.rootPath) {
             error('No folders are open')
         } else {
             environment = new Environment('DevelopmentServer');
             app.start(environment)
+                .then(message => {
+                    if (message) {
+                        info(message);
+                    }
+                }, error => {
+                    if (error && error.message) {
+                        environment.error(error.message);
+                    }
+                });
+        }
+    }));
+
+    context.subscriptions.push(vscode.commands.registerCommand('server.start', () => {
+        if (!vscode.workspace.rootPath) {
+            error('No folders are open')
+        } else {
+            environment = new Environment('DevelopmentServer');
+            app.start(environment, { record: false })
                 .then(message => {
                     if (message) {
                         info(message);
@@ -59,15 +77,15 @@ function activate(context) {
             });
     }));
 
-     context.subscriptions.push(vscode.commands.registerCommand('server.open', () => {
+    context.subscriptions.push(vscode.commands.registerCommand('server.open', () => {
         app.open();
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand('server.beginLiveReload',()=>{
+    context.subscriptions.push(vscode.commands.registerCommand('server.startLive', () => {
 
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand('server.stopLiveReload',()=>{
+    context.subscriptions.push(vscode.commands.registerCommand('server.stopLive', () => {
 
     }));
 }

@@ -66,7 +66,7 @@ function getMockConfiguration(config) {
     }
 }
 
-module.exports = function () {
+module.exports = function(parameter) {
     utils.setRootPath(rootPath);
     const environmentConfig = getEnvironmentConfiguration(),
         defaultConfig = getDefaultConfiguration(),
@@ -77,7 +77,7 @@ module.exports = function () {
         directory: rootPath,
         watchDirs: Array.isArray(customerConfig.watchDirs) ? customerConfig.watchDirs : (customerConfig.watchDirs ? [customerConfig.watchDirs] : [rootPath])
     };
-    Object.assign(config, customerConfig, defaultConfig);
+    Object.assign(config, parameter || {}, customerConfig, defaultConfig);
     getMockConfiguration(config);
     return config;
 };
