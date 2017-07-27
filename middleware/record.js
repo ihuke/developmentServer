@@ -11,7 +11,9 @@ const utils = require('../utils'),
  * @author huk/2016.10.17
  */
 module.exports = exports = function(app, config, environment) {
-    var header = '<script src="/developmentServer/extend.js"></script><script src="/developmentServer/livereload.js"></script><link rel="stylesheet" media="screen" href="/developmentServer/toolbar/toolbar.css">',
+    var toolbar = '<script src="/developmentServer/extend.js"></script><link rel="stylesheet" media="screen" href="/developmentServer/toolbar/toolbar.css">',
+        live = '<script src="/developmentServer/livereload.js"></script>',
+        // var header = '<script src="/developmentServer/extend.js"></script><script src="/developmentServer/livereload.js"></script><link rel="stylesheet" media="screen" href="/developmentServer/toolbar/toolbar.css">',
         ignore = [/\.js(\?.*)?$/, /\.css(\?.*)?$/, /\.svg(\?.*)?$/, /\.ico(\?.*)?$/,
             /\.woff(\?.*)?$/, /\.png(\?.*)?$/, /\.jpg(\?.*)?$/, /\.jpeg(\?.*)?$/, /\.gif(\?.*)?$/, /\.pdf(\?.*)?$/,
             /\.json(\?.*)?$/
@@ -63,13 +65,16 @@ module.exports = exports = function(app, config, environment) {
         var rule = /<head>/;
         if (rule.test(body)) {
             body = body.replace(rule, function(w) {
-                return w + header;
+                return w + live + (config.toolbar ? toolbar : '');
             });
         }
         return body;
     }
 
     function injectBody(body, host) {
+        if (!config.toolbar) {
+            return body;
+        }
         var _body = body;
         let content = utils.readFile(path.join(utils.getCurrentPath(), "extend/toolbar/toolbar.html"))
         rules.some(function(rule) {

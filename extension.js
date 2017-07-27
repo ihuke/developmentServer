@@ -15,7 +15,7 @@ function activate(context) {
             error('No folders are open')
         } else {
             environment = new Environment('DevelopmentServer');
-            app.start(environment)
+            app.start(environment, { toolbar: true })
                 .then(message => {
                     if (message) {
                         info(message);
@@ -33,7 +33,7 @@ function activate(context) {
             error('No folders are open')
         } else {
             environment = new Environment('DevelopmentServer');
-            app.start(environment, { record: false })
+            app.start(environment, { toolbar: false })
                 .then(message => {
                     if (message) {
                         info(message);

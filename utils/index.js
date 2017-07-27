@@ -232,7 +232,6 @@ class Utils {
      * @memberOf Utils
      */
     registeMiddleWares(app, config, environment, middlewares) {
-        //var isUndefined = this.isUndefined;
         middlewares.forEach(item => {
             if (this.isUndefined(config[item]) || config[item]) {
                 const middleware = this.checkAndImportModule(item.path, `../middleware/${item}`);
