@@ -1,3 +1,7 @@
+## 2017.07.27
+- fixed liveReload in windows environment
+
+
 ## 2017.06.06
 
 - fixed img url in README
